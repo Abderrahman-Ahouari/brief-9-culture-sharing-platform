@@ -10,7 +10,7 @@ CREATE TABLE users (
     email VARCHAR(150) UNIQUE NOT NULL,
     phone VARCHAR(15) NOT NULL,
     password VARCHAR(255) UNIQUE NOT NULL,
-    role ENUM('admin', 'author', 'user') NOT NULL
+    role ENUM('author', 'user') NOT NULL
 );
 
 CREATE TABLE articles (
@@ -21,8 +21,8 @@ CREATE TABLE articles (
     author_id INT,
     category_id INT,
     status ENUM('pending', 'published', 'rejected') DEFAULT 'pending',
-    FOREIGN KEY (author_id) REFERENCES users(users_id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories(categories_id)
+    FOREIGN KEY (author_id) REFERENCES users(users_id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES categories(categories_id) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
 CREATE TABLE categories (
@@ -77,14 +77,47 @@ INSERT INTO articles (title, content, author_id, category_id, status) VALUES
 
 
 
--- get all the articls created by a specific auteur 
+-- get all the articls created by a specific auteur for the author profile
 select title, content, publication_date, articles_id FROM articles
-WHERE author_id='4' and status='published';
+WHERE author_id='4' and status='published' ORDER BY publication_date;
 
--- get a specific user informations 
+-- get a specific user informations for the user profile
 SELECT first_name, last_name, email, phone FROM users
 where users_id='9';
 
--- get the pending articles pour les valider ou refuser
+-- get the pending articles to be validated or rejected by the admin
 select title, content, publication_date, articles_id FROM articles
 WHERE status='pending';
+
+
+
+-- get all categories to display on a list in the admin dashboard
+select name, categories_id FROM categories;
+
+
+-- get articles by categorie
+SELECT title, content, publication_date, articles_id, author_id, category_id FROM articles 
+where category_id = '3';
+
+
+
+-- query to add an article
+INSERT INTO articles (title, content, author_id, category_id) VALUES('Article test', 'Content test 1...', 4, 3);
+
+-- query to modify an article
+UPDATE articles SET title = 'abdo', content='changecontent', category_id=3, status='pending' where articles_id='3';
+
+-- query to delete an article
+DELETE FROM articles WHERE articles_id=3;
+
+
+
+
+-- creat a categoeie
+INSERT INTO categories(name) VALUES('history');
+
+-- modify a categorie
+UPDATE categories set name='comedy' WHERE categories_id = '2';
+
+-- delete a categorie
+DELETE FROM categories WHERE categories_id = '1';
