@@ -9,14 +9,14 @@ class users{
         private $password;
         private $role;
 
-        public function __construct($id=1, $first_name='', $last_name='', $email='', $phone='', $password='', $role=''){
-            $this->setid($id);
-            $this->setFirstName($first_name);
-            $this->setLastName($last_name);
-            $this->setEmail($email);
-            $this->setPhone($phone);
-            $this->setpassword($password);
-            $this->setrole($role);
+        public function __construct($id='', $first_name='', $last_name='', $email='', $phone='', $password='', $role=''){
+            $this->id=$id;
+            $this->first_name=$first_name;
+            $this->last_name=$last_name;
+            $this->email=$email;
+            $this->phone=$phone;
+            $this->password=$password;
+            $this->role=$role;
         }
      
      public function getid() {
@@ -90,10 +90,11 @@ class users{
     public function getrole(){
         return $this->role;
     }
-   
-       
-    public function signup($first_name, $last_name, $email, $phone, $password, $role){
+
+
+    public function signup($    , $last_name, $email, $phone, $password, $role){
        try{ 
+
         $db_connect = new Database_connection;
         $connection = $db_connect->connect();
 
@@ -102,12 +103,12 @@ VALUES(:first_name, :last_name, :email, :phone, :password , :role);";
 
         $query = $connection->prepare($sql);
 
-        $query->bindParam(':first_name', $first_name, PDO::PARAM_STR);
-        $query->bindParam(':last_name', $last_name, PDO::PARAM_STR);
-        $query->bindParam(':email',$email, PDO::PARAM_STR);
-        $query->bindParam(':phone', $phone, PDO::PARAM_STR);
-        $query->bindParam(':password', $password, PDO::PARAM_STR);
-        $query->bindParam(':role', $role, PDO::PARAM_STR);   
+        $query->bindParam(':first_name', $this->setfirstname($first_name), PDO::PARAM_STR);
+        $query->bindParam(':last_name', $this->setlastname($last_name), PDO::PARAM_STR);
+        $query->bindParam(':email', $this->setemail($email), PDO::PARAM_STR);
+        $query->bindParam(':phone', $this->setphone($phone), PDO::PARAM_STR);
+        $query->bindParam(':password', $this->setpassword($password), PDO::PARAM_STR);
+        $query->bindParam(':role', $this->setrole($role), PDO::PARAM_STR);   
         
         $query->execute(); 
         $db_connect->disconnect(); 
@@ -117,14 +118,14 @@ VALUES(:first_name, :last_name, :email, :phone, :password , :role);";
              }
 
 
-    public function login(  ){
-            
+    public function login(){
+
     }         
 
 }
-
+     
 $ahouari = new users();
-$ahouari->signup('abdo', 'ahouari', 'ggggg@gmail.com', '0202020202','pass2006', 'user');
+$ahouari->signup(); 
 ?>
 
    
