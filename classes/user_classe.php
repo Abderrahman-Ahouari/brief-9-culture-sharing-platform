@@ -109,13 +109,15 @@ VALUES(:first_name, :last_name, :email, :phone, :password , :role);";
 
 
     public function login(){
-
+        $db_connect = new Database_connection;
+        $connection = $db_connect->connect();
+        
+        
     }         
 
 }
      
-$ahouari = new users();
-$ahouari->signup('abdo', 'ahouari', 'abdo@gmail.com', '2020202020', 'abdo20062006', 'user'); 
+
 ?>
 
    
