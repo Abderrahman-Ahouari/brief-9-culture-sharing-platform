@@ -10,7 +10,7 @@ CREATE TABLE users (
     email VARCHAR(150) UNIQUE NOT NULL,
     phone VARCHAR(15) NOT NULL,
     password VARCHAR(255) UNIQUE NOT NULL,
-    role ENUM('author', 'user') NOT NULL
+    role ENUM('author', 'user', 'admin') NOT NULL
 );
 
 CREATE TABLE articles (
@@ -121,3 +121,5 @@ UPDATE categories set name='comedy' WHERE categories_id = '2';
 
 -- delete a categorie
 DELETE FROM categories WHERE categories_id = '1';
+
+
