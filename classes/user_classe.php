@@ -8,16 +8,6 @@ class users{
         private $phone;
         private $password;
         private $role;
-
-        public function __construct($id='', $first_name='', $last_name='', $email='', $phone='', $password='', $role=''){
-            $this->id=$id;
-            $this->first_name=$first_name;
-            $this->last_name=$last_name;
-            $this->email=$email;
-            $this->phone=$phone;
-            $this->password=$password;
-            $this->role=$role;
-        }
      
      public function getid() {
         return $this->id;
@@ -92,7 +82,7 @@ class users{
     }
 
 
-    public function signup($    , $last_name, $email, $phone, $password, $role){
+    public function signup($first_name, $last_name, $email, $phone, $password, $role){
        try{ 
 
         $db_connect = new Database_connection;
@@ -125,7 +115,7 @@ VALUES(:first_name, :last_name, :email, :phone, :password , :role);";
 }
      
 $ahouari = new users();
-$ahouari->signup(); 
+$ahouari->signup('abdo', 'ahouari', 'abdo@gmail.com', '2020202020', 'abdo20062006', 'user'); 
 ?>
 
    
