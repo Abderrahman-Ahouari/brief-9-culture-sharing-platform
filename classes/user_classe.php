@@ -93,12 +93,12 @@ VALUES(:first_name, :last_name, :email, :phone, :password , :role);";
 
         $query = $connection->prepare($sql);
 
-        $query->bindParam(':first_name', $this->setfirstname($first_name), PDO::PARAM_STR);
-        $query->bindParam(':last_name', $this->setlastname($last_name), PDO::PARAM_STR);
-        $query->bindParam(':email', $this->setemail($email), PDO::PARAM_STR);
-        $query->bindParam(':phone', $this->setphone($phone), PDO::PARAM_STR);
-        $query->bindParam(':password', $this->setpassword($password), PDO::PARAM_STR);
-        $query->bindParam(':role', $this->setrole($role), PDO::PARAM_STR);   
+        $query->bindParam(':first_name', $this->$first_name, PDO::PARAM_STR);
+        $query->bindParam(':last_name', $this->$last_name, PDO::PARAM_STR);
+        $query->bindParam(':email', $this->$email, PDO::PARAM_STR);
+        $query->bindParam(':phone', $this->$phone, PDO::PARAM_STR);
+        $query->bindParam(':password', $this->$password, PDO::PARAM_STR);
+        $query->bindParam(':role', $this->$role, PDO::PARAM_STR);   
         
         $query->execute(); 
         $db_connect->disconnect(); 
