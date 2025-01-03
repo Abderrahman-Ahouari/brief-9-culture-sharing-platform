@@ -122,4 +122,3 @@ UPDATE categories set name='comedy' WHERE categories_id = '2';
 -- delete a categorie
 DELETE FROM categories WHERE categories_id = '1';
 
-

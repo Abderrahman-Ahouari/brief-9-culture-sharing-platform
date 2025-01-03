@@ -67,7 +67,8 @@ class users{
         }
     }
     public function setpassword($password) {
-            $this->password = $password;
+        $hashed_password = password_hash($password,PASSWORD_DEFAULT);
+            $this->password = $hashed_password;
     }
     
     public function setrole($role) {
@@ -83,6 +84,7 @@ class users{
 
 
     public function signup($first_name, $last_name, $email, $phone, $password, $role){
+        session_start(); 
        try{ 
 
         $db_connect = new Database_connection;
@@ -91,29 +93,64 @@ class users{
         $sql = "INSERT INTO users(first_name, last_name, email, phone, password, role) 
 VALUES(:first_name, :last_name, :email, :phone, :password , :role);";
 
+$hashed_password = password_hash($password,PASSWORD_DEFAULT);
+
         $query = $connection->prepare($sql);
 
         $query->bindParam(':first_name', $first_name, PDO::PARAM_STR);
         $query->bindParam(':last_name', $last_name, PDO::PARAM_STR);
         $query->bindParam(':email', $email, PDO::PARAM_STR);
         $query->bindParam(':phone', $phone, PDO::PARAM_STR);
-        $query->bindParam(':password', $password, PDO::PARAM_STR);
+        $query->bindParam(':password', $hashed_password, PDO::PARAM_STR);
         $query->bindParam(':role', $role, PDO::PARAM_STR);   
         
         $query->execute(); 
         $db_connect->disconnect(); 
+
+    $_SESSION['id'] = $connection->lastInsertId();
+    $_SESSION['role'] = $role;
     }catch(PDOException $error){
       die("an error while registering" . $error->getMessage());
     }   
              }
 
 
-    public function login(){
-        $db_connect = new Database_connection;
-        $connection = $db_connect->connect();
+    public function login($email, $password){
+        session_start();
+        try{
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+            
+            $sql="SELECT * FROM users WHERE email=:email AND password=:password ;";
+    
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':email', $email, PDO::PARAM_STR);
+            $query->bindParam(':password', $password, PDO::PARAM_STR);
+    
+            $query->execute();
+            $user = $query->fetch(PDO::FETCH_ASSOC);
+    
+            if($user and password_verify($password, $user['password'])){
+                $_SESSION['id'] = $user['id'];             
+                $_SESSION['role'] = $user['role'];
+            }else{
+                die("Invalid email or password.");
+            }
+      
+            $db_connect->disconnect();
+
+        }catch (PDOException $error) {
+            die("An error in login: " . $error->getMessage());
+        }
         
-        
-    }         
+    }
+    
+    public function logout(){
+        session_start();
+        session_unset();
+        session_destroy();
+    }
 
 }
      
