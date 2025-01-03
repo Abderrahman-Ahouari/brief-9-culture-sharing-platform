@@ -6,7 +6,7 @@ DROP TABLE categories;
 CREATE TABLE users (
     users_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL, 
     email VARCHAR(150) UNIQUE NOT NULL,
     phone VARCHAR(15) NOT NULL,
     password VARCHAR(255) UNIQUE NOT NULL,

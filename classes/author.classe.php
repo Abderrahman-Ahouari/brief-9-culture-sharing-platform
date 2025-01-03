@@ -2,7 +2,7 @@
 require('user_classe.php');
 
 class author extends users{
-    public function add_categorie(){
+    public function read_categorie(){
         try{ 
             $db_connect = new Database_connection;
             $connection = $db_connect->connect();
@@ -13,11 +13,13 @@ class author extends users{
             
             $query->execute();
           
+            $categories = $query->fetch(PDO::FETCH_ASSOC);
+
             $db_connect->disconnect();
 
         }catch (PDOException $error) {
-            die("An error in login: " . $error->getMessage());
-        }
+            die("An error in getting categories: " . $error->getMessage());
+        }      
     }
 
      
@@ -37,10 +39,52 @@ class author extends users{
             $db_connect->disconnect();
 
         }catch (PDOException $error) {
-            die("An error in login: " . $error->getMessage());
+            die("An error in adding categorie: " . $error->getMessage());
         }
     }
 
+
+    public function modify_categorie($cate_name,$id){
+        try{
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+            
+            $sql="UPDATE categories set name= :cate_name WHERE categories_id = :id ;";
+    
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':cate_name', $cate_name, PDO::PARAM_STR);
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            $query->execute();
+      
+            $db_connect->disconnect();
+
+        }catch (PDOException $error) {
+            die("An error in modifying categorie: " . $error->getMessage());
+        }
+    }
+
+
+    public function delete_categorie($id){
+        try{
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+    
+            $sql="DELETE FROM categories WHERE categories_id = :id ;";
+    
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            $query->execute();
+    
+            $db_connect->disconnect();
+
+        }catch (PDOException $error) {
+            die("An error in deleting categorie: " . $error->getMessage());
+        }
+    }
 
 }
 
