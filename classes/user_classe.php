@@ -121,17 +121,17 @@ $hashed_password = password_hash($password,PASSWORD_DEFAULT);
             $db_connect = new Database_connection;
             $connection = $db_connect->connect();
             
-            $sql="SELECT * FROM users WHERE email=:email AND password=:password ;";
+            $sql="SELECT * FROM users WHERE email=:email;";
     
             $query = $connection->prepare($sql);
     
             $query->bindParam(':email', $email, PDO::PARAM_STR);
-            $query->bindParam(':password', $password, PDO::PARAM_STR);
     
             $query->execute();
             $user = $query->fetch(PDO::FETCH_ASSOC);
-    
-            if($user and password_verify($password, $user['password'])){
+
+                
+                if($user && password_verify($password, $user['password']) ){
                 $_SESSION['id'] = $user['id'];             
                 $_SESSION['role'] = $user['role'];
             }else{
@@ -150,9 +150,9 @@ $hashed_password = password_hash($password,PASSWORD_DEFAULT);
         session_start();
         session_unset();
         session_destroy();
-    }
+    }   
 
-}
+}  
      
 
 ?>

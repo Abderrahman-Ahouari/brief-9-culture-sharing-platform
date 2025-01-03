@@ -1,3 +1,24 @@
+<?php
+      require('../classes/author.classe.php');
+   
+   session_start();
+  //  if($_SESSION['role'] === "user"){
+  //    header("location: home.php");
+  //  }elseif($_SESSION['role'] === "author"){
+  //    header("location: author.php");
+  //  }
+   echo $_SESSION['role'];    
+   echo $_SESSION['id'];
+
+   if($_SERVER['REQUEST_METHOD'] === 'POST'){
+     if(isset($_POST['btn_add'])){
+        
+     }elseif(isset($_POST['btn_modify'])){
+
+    }
+   }
+    
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -149,7 +170,7 @@
 
     .hidden-form .btn-exit {
       position: absolute;
-      top: 10px;
+      top: 10px; 
       right: 10px;
       background: none;
       color: #333;
@@ -206,9 +227,9 @@
   <div class="hidden-form add-form" id="addForm">
     <button class="btn-exit" onclick="hideForms()">X</button>
     <h3>Ajouter une Catégorie</h3>
-    <form>
+    <form method="post">
       <input type="text" placeholder="Nom de la Catégorie" required>
-      <button type="submit">Enregistrer</button>
+      <button type="submit" name="btn_add">Enregistrer</button>
     </form>
   </div>
 
@@ -216,9 +237,9 @@
   <div class="hidden-form modify-form" id="modifyForm">
     <button class="btn-exit" onclick="hideForms()">X</button>
     <h3>Modifier une Catégorie</h3>
-    <form>
+    <form method="post">
       <input type="text" placeholder="Nom de la Catégorie" required>
-      <button type="submit">Modifier</button>
+      <button type="submit" name="btn_modify">Modifier</button>
     </form>
   </div>
 

@@ -82,8 +82,7 @@ select title, content, publication_date, articles_id FROM articles
 WHERE author_id='4' and status='published' ORDER BY publication_date;
 
 -- get a specific user informations for the user profile
-SELECT first_name, last_name, email, phone FROM users
-where users_id='9';
+SELECT first_name, last_name, email, phone FROM users where users_id='9';
 
 -- get the pending articles to be validated or rejected by the admin
 select title, content, publication_date, articles_id FROM articles

@@ -1,4 +1,6 @@
 <?php
+require('../classes/user_classe.php');
+   
     if($_SERVER["REQUEST_METHOD"] === 'POST'){
       $first_name = $_POST['first-name'];
       $last_name = $_POST['last-name'];
@@ -6,8 +8,11 @@
       $phone = $_POST['phone']; 
       $role = $_POST['role'];
       $password = $_POST['password'];
-    
-    }
+
+      $user = new users();
+      $user->signup($first_name, $last_name, $email, $phone,$password, $role);
+      header("location: home.php");   
+    } 
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -1,3 +1,17 @@
+<?php
+      require('../classes/user_classe.php');
+   
+      if($_SERVER["REQUEST_METHOD"] === 'POST'){
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+  
+        $user = new users();
+        $user->login($email, $password);
+        header("location: home.php");
+        
+
+      } 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,7 +113,7 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-        <form>
+        <form method="post">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
