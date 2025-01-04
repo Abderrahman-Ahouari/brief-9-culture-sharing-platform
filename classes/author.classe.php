@@ -13,7 +13,7 @@ class author extends users{
             
             $query->execute();
           
-            $categories = $query->fetch(PDO::FETCH_ASSOC);
+            $categories = $query->fetchAll(PDO::FETCH_ASSOC);
 
             $db_connect->disconnect();
              

@@ -32,7 +32,7 @@
   <title>Tableau de Bord Admin</title>
   <style>
     .id{
-      /* visibility: hidden; */
+       display: none;
     }
     body {
       font-family: Arial, sans-serif;
@@ -212,7 +212,9 @@
         </tr>
       </thead>
       <tbody>
-        <?php while($categorie_list = $categorie->read_categorie()){ ?>
+        <?php 
+        $list = $categorie->read_categorie();
+        foreach($list as $categorie_list){ ?>
         <tr>
           <td><?php echo $categorie_list['name'] ?></td>
           <td class="id"><?php echo $categorie_list['categories_id'] ?></td>
