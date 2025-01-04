@@ -112,6 +112,47 @@ class articl {
         }      
     }
 
+
+    public function accept_articl($id){
+        try{
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+    
+            $sql="UPDATE articles set status = 'published' where articles_id = :id;";
+    
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            $query->execute();
+    
+            $db_connect->disconnect();
+
+        }catch (PDOException $error) {
+            die("An error in accepting article: " . $error->getMessage());
+        }
+    }
+
+
+    public function reject_articl($id){
+        try{
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+    
+            $sql="UPDATE articles set status = 'rejected' where articles_id =:id;";
+    
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            $query->execute();
+    
+            $db_connect->disconnect();
+
+        }catch (PDOException $error) {
+            die("An error in rejecting article: " . $error->getMessage());
+        }
+    }
     } 
 
 ?>

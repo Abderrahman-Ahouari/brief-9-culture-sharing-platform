@@ -16,22 +16,33 @@
 
 
    $categorie = new admin;
+   $articles = new articl;
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if (isset($_POST['btn_delete'])) {
        $categorie_id = $_POST['catgeorie_id'];
        $categorie->delete_categorie($categorie_id);
-    } elseif (isset($_POST['btn_add'])) {
+    } 
+    
+    elseif (isset($_POST['btn_add'])) {
        $name= $_POST['add_categorie'];
        $categorie->add_categorie($name);
-    } elseif (isset($_POST['btn_modify'])) {
+    } 
+    
+    elseif (isset($_POST['btn_modify'])) {
       $new_name = $_POST['new_name'];
       $categorie_id = $_POST['catgeorie_id'];
       $categorie->modify_categorie($new_name, $categorie_id);
-    } elseif (isset($_POST['accept'])) {
-
-    } elseif (isset($_POST['reject'])) {
-
+    } 
+    
+    elseif (isset($_POST['accept'])) {
+      $article_id = $_POST['article_id'];
+      $articles->accept_articl($article_id);
+    } 
+      
+    elseif (isset($_POST['reject'])) {
+      $article_id = $_POST['article_id'];
+      $articles->reject_articl($article_id);
     }
     
       
@@ -352,7 +363,6 @@
       </thead>
       <tbody>
         <?php 
-        $articles = new articl;
         $pending_articls = $articles->get_pending_articles();
 
         foreach( $pending_articls as $articl){ ?>
