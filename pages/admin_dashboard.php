@@ -14,7 +14,7 @@
   }
 
 
-   $categorie = new author;
+   $categorie = new admin;
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if (isset($_POST['btn_delete'])) {

@@ -1,7 +1,7 @@
 <?php
  require('user_classe.php');
 
-class author extends users{
+class admin extends users{
     public function read_categorie(){
         try{ 
             $db_connect = new Database_connection;
