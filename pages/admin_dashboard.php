@@ -2,23 +2,25 @@
       require('../classes/author.classe.php');
    
    session_start();
-  //  if($_SESSION['role'] === "user"){
-  //    header("location: home.php");
-  //  }elseif($_SESSION['role'] === "author"){
-  //    header("location: author.php");
-  //  }
+   if($_SESSION['role'] === "user"){
+     header("location: home.php");
+   }elseif($_SESSION['role'] === "author"){
+     header("location: author.php");
+   }
    echo $_SESSION['role'];    
    echo $_SESSION['id'];
+
+   $categorie = new author;
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
      if(isset($_POST['btn_add'])){
         $cate_name = $_POST['add_categorie'];
-        $categorie = new author;
         $categorie->add_categorie($cate_name);
      }elseif(isset($_POST['btn_modify'])){
         
     }
-     $categorie->read_categorie();    
+    $categorie_list = $categorie->read_categorie();
+    
    }
     
 ?>
@@ -29,6 +31,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tableau de Bord Admin</title>
   <style>
+    .id{
+      /* visibility: hidden; */
+    }
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f4;
@@ -207,13 +212,16 @@
         </tr>
       </thead>
       <tbody>
+        <?php while($categorie_list){ ?>
         <tr>
-          <td>Technologie</td>
+          <td><?php echo $categorie_list['name'] ?></td>
+          <td class="id"><?php echo $categorie_list['id'] ?></td>
           <td>
             <button class="btn-update" onclick="showModifyForm()">Modifier</button>
             <button class="btn-delete">Supprimer</button>
           </td>
         </tr>
+        <?php } ?>
       </tbody>
     </table>
   </div>

@@ -16,7 +16,8 @@ class author extends users{
             $categories = $query->fetch(PDO::FETCH_ASSOC);
 
             $db_connect->disconnect();
-
+             
+            return $this->categories;  
         }catch (PDOException $error) {
             die("An error in getting categories: " . $error->getMessage());
         }      
