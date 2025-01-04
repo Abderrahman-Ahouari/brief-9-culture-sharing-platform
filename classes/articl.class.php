@@ -7,13 +7,14 @@
                 $db_connect = new Database_connection;
                 $connection = $db_connect->connect();
                 
-                $sql="SELECT name, categories_id FROM categories;";
+                $sql="SELECT title, content, publication_date, articles_id FROM articles
+                      WHERE status='pending';";
         
                 $query = $connection->prepare($sql);
                 
                 $query->execute();
                 
-                $categories = $query->fetchAll(PDO::FETCH_ASSOC);
+                $pending_articles = $query->fetchAll(PDO::FETCH_ASSOC);
     
                 $db_connect->disconnect();
                  
