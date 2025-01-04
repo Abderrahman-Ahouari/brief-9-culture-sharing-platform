@@ -1,3 +1,17 @@
+<?php
+
+session_start();
+if($_SESSION['role'] === "admin"){
+  header("location: admin_dashboard.php");
+}
+elseif($_SESSION['role'] === "user"){
+  header("location: home.php");
+}
+elseif(!$_SESSION['role']){
+ header("location: signup.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

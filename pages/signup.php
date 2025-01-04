@@ -1,6 +1,10 @@
 <?php
 require('../classes/user_classe.php');
-   
+session_start();
+if(!$_SESSION){
+}else{
+  header("location: home.php");
+}
     if($_SERVER["REQUEST_METHOD"] === 'POST'){
       $first_name = $_POST['first-name'];
       $last_name = $_POST['last-name'];

@@ -5,15 +5,14 @@
    session_start();
    if($_SESSION['role'] === "user"){
      header("location: home.php");
-   }elseif($_SESSION['role'] === "author"){
-     header("location: author.php");
-   }elseif($_SESSION['role'] === "admin"){
-    header("location: admin_dashboard.php");
-   }else{
-    header("location: signup.php");
    }
-   echo $_SESSION['role'];    
-   echo $_SESSION['id'];
+   elseif($_SESSION['role'] === "author"){
+     header("location: author.php");
+   }
+   elseif(!$_SESSION['role']){
+    header("location: signup.php");
+  }
+
 
    $categorie = new author;
 
@@ -25,8 +24,6 @@
        $name= $_POST['add_categorie'];
        $categorie->add_categorie($name);
     } elseif (isset($_POST['btn_modify'])) {
-      echo "button modify was triggerd";
-      echo $_POST['catgeorie_id'];
       $new_name = $_POST['new_name'];
       $categorie_id = $_POST['catgeorie_id'];
       $categorie->modify_categorie($new_name, $categorie_id);
