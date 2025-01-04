@@ -1,16 +1,15 @@
 <?php
       require('../classes/author.classe.php');
-      require('../classes/connection.php');
-      require('../classes/user_classe.php');
+
    
    session_start();
-   if($_SESSION['role'] === "user"){
-     header("location: home.php");
-   }elseif($_SESSION['role'] === "author"){
-     header("location: author.php");
-   }
-   echo $_SESSION['role'];    
-   echo $_SESSION['id'];
+  //  if($_SESSION['role'] === "user"){
+  //    header("location: home.php");
+  //  }elseif($_SESSION['role'] === "author"){
+  //    header("location: author.php");
+  //  }
+  //  echo $_SESSION['role'];    
+  //  echo $_SESSION['id'];
 
    $categorie = new author;
 
@@ -20,11 +19,10 @@
         $categorie->add_categorie($cate_name);
      }elseif(isset($_POST['btn_modify'])){
         
-    }
-    $categorie_list = $categorie->read_categorie();
-    
+    }    
    }
-    
+   $categorie_list = $categorie->read_categorie();
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -217,7 +215,7 @@
         <?php while($categorie_list){ ?>
         <tr>
           <td><?php echo $categorie_list['name'] ?></td>
-          <td class="id"><?php echo $categorie_list['id'] ?></td>
+          <td class="id"><?php echo $categorie_list['categories_id'] ?></td>
           <td>
             <button class="btn-update" onclick="showModifyForm()">Modifier</button>
             <button class="btn-delete">Supprimer</button>

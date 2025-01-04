@@ -1,5 +1,4 @@
 <?php
- require('connection.php');
  require('user_classe.php');
 
 class author extends users{
@@ -18,7 +17,7 @@ class author extends users{
 
             $db_connect->disconnect();
              
-            return $this->categories;  
+            return $categories;  
         }catch (PDOException $error) {
             die("An error in getting categories: " . $error->getMessage());
         }      
