@@ -1,5 +1,6 @@
 <?php
       require('../classes/author.classe.php');
+      
 
    
    session_start();
@@ -27,7 +28,11 @@
       $new_name = $_POST['new_name'];
       $categorie_id = $_POST['catgeorie_id'];
       $categorie->modify_categorie($new_name, $categorie_id);
-    }  
+    } elseif (isset($_POST['accept'])) {
+
+    } elseif (isset($_POST['reject'])) {
+
+    }
     
       
    }
@@ -346,21 +351,27 @@
         </tr>
       </thead>
       <tbody>
+        <?php 
+        $articles = new articl;
+        $pending_articls = $articles->get_pending_articles();
+
+        foreach( $pending_articls as $articl){ ?>
         <tr>
-          <td>Introduction à la Technologie</td>
-          <td>Une brève introduction aux dernières technologies. </td>
-          <td>2024-12-31</td>
+          <td><?php echo $articl['title']; ?></td>
+          <td><?php echo $articl['content']; ?></td>
+          <td><?php echo $articl['publication_date']; ?></td>
           <td>
             <form method="POST"  style="display:inline;">
-              <input type="hidden" name="article_id" value="">
+              <input type="hidden" name="article_id" value="<?php echo $articl['articles_id']; ?>">
               <button type="submit" name="accept" class="btn-accept">Accepter</button>
             </form>
             <form method="POST" style="display:inline;">
-              <input type="hidden" name="article_id" value="">
+              <input type="hidden" name="article_id" value="<?php echo $articl['articles_id']; ?>">
               <button type="submit" name="reject" class="btn-reject">Rejeter</button>
             </form>
           </td>
         </tr> 
+        <?php } ?>
       </tbody>
     </table>
   </div>
