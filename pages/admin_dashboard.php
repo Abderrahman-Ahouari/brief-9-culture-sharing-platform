@@ -1,5 +1,6 @@
 <?php
       require('../classes/author.classe.php');
+      
 
    
    session_start();
@@ -15,19 +16,34 @@
 
 
    $categorie = new admin;
+   $articles = new articl;
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if (isset($_POST['btn_delete'])) {
        $categorie_id = $_POST['catgeorie_id'];
        $categorie->delete_categorie($categorie_id);
-    } elseif (isset($_POST['btn_add'])) {
+    } 
+    
+    elseif (isset($_POST['btn_add'])) {
        $name= $_POST['add_categorie'];
        $categorie->add_categorie($name);
-    } elseif (isset($_POST['btn_modify'])) {
+    } 
+    
+    elseif (isset($_POST['btn_modify'])) {
       $new_name = $_POST['new_name'];
       $categorie_id = $_POST['catgeorie_id'];
       $categorie->modify_categorie($new_name, $categorie_id);
-    }  
+    } 
+    
+    elseif (isset($_POST['accept'])) {
+      $article_id = $_POST['article_id'];
+      $articles->accept_articl($article_id);
+    } 
+      
+    elseif (isset($_POST['reject'])) {
+      $article_id = $_POST['article_id'];
+      $articles->reject_articl($article_id);
+    }
     
       
    }
@@ -346,21 +362,26 @@
         </tr>
       </thead>
       <tbody>
+        <?php 
+        $pending_articls = $articles->get_pending_articles();
+
+        foreach( $pending_articls as $articl){ ?>
         <tr>
-          <td>Introduction à la Technologie</td>
-          <td>Une brève introduction aux dernières technologies. </td>
-          <td>2024-12-31</td>
+          <td><?php echo $articl['title']; ?></td>
+          <td><?php echo $articl['content']; ?></td>
+          <td><?php echo $articl['publication_date']; ?></td>
           <td>
             <form method="POST"  style="display:inline;">
-              <input type="hidden" name="article_id" value="">
+              <input type="hidden" name="article_id" value="<?php echo $articl['articles_id']; ?>">
               <button type="submit" name="accept" class="btn-accept">Accepter</button>
             </form>
             <form method="POST" style="display:inline;">
-              <input type="hidden" name="article_id" value="">
+              <input type="hidden" name="article_id" value="<?php echo $articl['articles_id']; ?>">
               <button type="submit" name="reject" class="btn-reject">Rejeter</button>
             </form>
           </td>
         </tr> 
+        <?php } ?>
       </tbody>
     </table>
   </div>

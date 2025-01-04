@@ -12,6 +12,11 @@ CREATE TABLE users (
     password VARCHAR(255) UNIQUE NOT NULL,
     role ENUM('author', 'user', 'admin') NOT NULL
 );
+   
+    CREATE TABLE categories (
+        categories_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL
+    );
 
 CREATE TABLE articles (
     articles_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -25,10 +30,6 @@ CREATE TABLE articles (
     FOREIGN KEY (category_id) REFERENCES categories(categories_id) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
-    CREATE TABLE categories (
-        categories_id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(100) NOT NULL
-    );
 
 
 -- isert some data for testing
@@ -138,3 +139,10 @@ UPDATE categories set name='comedy' WHERE categories_id = '2';
 -- delete a categorie
 DELETE FROM categories WHERE categories_id = '1';
 
+
+-- query to accept an articl
+UPDATE articles set status = 'published' where articles_id ='';
+
+
+-- query to reject an articl
+UPDATE articles set status = 'rejected' where articles_id ='';

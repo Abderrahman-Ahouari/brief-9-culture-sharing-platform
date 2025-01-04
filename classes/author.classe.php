@@ -89,5 +89,70 @@ class admin extends users{
 
 }
 
+class articl {
+    public function get_pending_articles(){
+        try{ 
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+            
+            $sql="SELECT title, content, publication_date, articles_id FROM articles
+                  WHERE status='pending';";
+    
+            $query = $connection->prepare($sql);
+            
+            $query->execute();
+            
+            $pending_articles = $query->fetchAll(PDO::FETCH_ASSOC);
+
+            $db_connect->disconnect();
+             
+            return $pending_articles;  
+        }catch (PDOException $error) {
+            die("An error in getting categories: " . $error->getMessage());
+        }      
+    }
+
+
+    public function accept_articl($id){
+        try{
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+    
+            $sql="UPDATE articles set status = 'published' where articles_id = :id;";
+    
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            $query->execute();
+    
+            $db_connect->disconnect();
+
+        }catch (PDOException $error) {
+            die("An error in accepting article: " . $error->getMessage());
+        }
+    }
+
+
+    public function reject_articl($id){
+        try{
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+    
+            $sql="UPDATE articles set status = 'rejected' where articles_id =:id;";
+    
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+    
+            $query->execute();
+    
+            $db_connect->disconnect();
+
+        }catch (PDOException $error) {
+            die("An error in rejecting article: " . $error->getMessage());
+        }
+    }
+    } 
 
 ?>
