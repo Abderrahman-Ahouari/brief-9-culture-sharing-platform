@@ -12,10 +12,13 @@
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
      if(isset($_POST['btn_add'])){
-        
+        $cate_name = $_POST['add_categorie'];
+        $categorie = new author;
+        $categorie->add_categorie($cate_name);
      }elseif(isset($_POST['btn_modify'])){
-
+        
     }
+     $categorie->read_categorie();    
    }
     
 ?>
@@ -211,13 +214,6 @@
             <button class="btn-delete">Supprimer</button>
           </td>
         </tr>
-        <tr>
-          <td>Science</td>
-          <td>
-            <button class="btn-update" onclick="showModifyForm()">Modifier</button>
-            <button class="btn-delete">Supprimer</button>
-          </td>
-        </tr>
       </tbody>
     </table>
   </div>
@@ -228,7 +224,7 @@
     <button class="btn-exit" onclick="hideForms()">X</button>
     <h3>Ajouter une Catégorie</h3>
     <form method="post">
-      <input type="text" placeholder="Nom de la Catégorie" required>
+      <input type="text" placeholder="Nom de la Catégorie" name="add_categorie" required>
       <button type="submit" name="btn_add">Enregistrer</button>
     </form>
   </div>
