@@ -1,5 +1,7 @@
 <?php
       require('../classes/author.classe.php');
+      require('../classes/connection.php');
+      require('../classes/user_classe.php');
    
    session_start();
    if($_SESSION['role'] === "user"){

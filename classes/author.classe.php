@@ -1,5 +1,6 @@
 <?php
-require('user_classe.php');
+ require('connection.php');
+ require('user_classe.php');
 
 class author extends users{
     public function read_categorie(){
