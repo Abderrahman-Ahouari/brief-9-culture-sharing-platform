@@ -210,6 +210,77 @@
       z-index: 999;
     }
   </style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      color: #B87333;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    table th, table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table th {
+      background-color: #FF7F50;
+      color: white;
+    }
+
+    table td {
+      color: #333;
+    }
+
+    table button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .btn-accept {
+      background-color: #2ecc71;
+    }
+
+    .btn-reject {
+      background-color: #e74c3c;
+    }
+
+    .btn-accept:hover {
+      background-color: #27ae60;
+    }
+
+    .btn-reject:hover {
+      background-color: #c0392b;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -257,6 +328,45 @@
       <button type="submit" name="btn_add">Enregistrer</button>
     </form>
   </div>
+
+
+
+
+
+
+  <div class="container">
+    <h3>Articles</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>titre de l'Article</th>
+          <th>Contenu</th>
+          <th>Date de Publication</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Introduction à la Technologie</td>
+          <td>Une brève introduction aux dernières technologies. </td>
+          <td>2024-12-31</td>
+          <td>
+            <form method="POST"  style="display:inline;">
+              <input type="hidden" name="article_id" value="">
+              <button type="submit" name="accept" class="btn-accept">Accepter</button>
+            </form>
+            <form method="POST" style="display:inline;">
+              <input type="hidden" name="article_id" value="">
+              <button type="submit" name="reject" class="btn-reject">Rejeter</button>
+            </form>
+          </td>
+        </tr> 
+      </tbody>
+    </table>
+  </div>
+
+
+
 
   <script>
     function showAddForm() {

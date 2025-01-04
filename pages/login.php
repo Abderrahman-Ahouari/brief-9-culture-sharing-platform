@@ -2,9 +2,10 @@
       require('../classes/user_classe.php');
 
       session_start();
-      if(!$_SESSION){
+      if($_SESSION){
+              header("location: home.php");
     }else{
-      header("location: home.php");
+
     }
 
    
