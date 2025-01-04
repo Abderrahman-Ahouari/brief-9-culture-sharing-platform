@@ -3,23 +3,36 @@
 
    
    session_start();
-  //  if($_SESSION['role'] === "user"){
-  //    header("location: home.php");
-  //  }elseif($_SESSION['role'] === "author"){
-  //    header("location: author.php");
-  //  }
-  //  echo $_SESSION['role'];    
-  //  echo $_SESSION['id'];
+   if($_SESSION['role'] === "user"){
+     header("location: home.php");
+   }elseif($_SESSION['role'] === "author"){
+     header("location: author.php");
+   }elseif($_SESSION['role'] === "admin"){
+    header("location: admin_dashboard.php");
+   }else{
+    header("location: signup.php");
+   }
+   echo $_SESSION['role'];    
+   echo $_SESSION['id'];
 
    $categorie = new author;
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-     if(isset($_POST['btn_add'])){
-        $cate_name = $_POST['add_categorie'];
-        $categorie->add_categorie($cate_name);
-     }elseif(isset($_POST['btn_modify'])){
-        
-    }    
+    if (isset($_POST['btn_delete'])) {
+       $categorie_id = $_POST['catgeorie_id'];
+       $categorie->delete_categorie($categorie_id);
+    } elseif (isset($_POST['btn_add'])) {
+       $name= $_POST['add_categorie'];
+       $categorie->add_categorie($name);
+    } elseif (isset($_POST['btn_modify'])) {
+      echo "button modify was triggerd";
+      echo $_POST['catgeorie_id'];
+      $new_name = $_POST['new_name'];
+      $categorie_id = $_POST['catgeorie_id'];
+      $categorie->modify_categorie($new_name, $categorie_id);
+    }  
+    
+      
    }
 
 
@@ -31,6 +44,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tableau de Bord Admin</title>
   <style>
+    
     .id{
        display: none;
     }
@@ -217,10 +231,18 @@
         foreach($list as $categorie_list){ ?>
         <tr>
           <td><?php echo $categorie_list['name'] ?></td>
-          <td class="id"><?php echo $categorie_list['categories_id'] ?></td>
           <td>
-            <button class="btn-update" onclick="showModifyForm()">Modifier</button>
-            <button class="btn-delete">Supprimer</button>
+          <form action="" method="post">
+          <input type="text" class="new_name" name="new_name">
+          <button class="btn-update" name="btn_modify" onclick="showModifyForm()">Modifier</button>
+          <input type="text" class="id" name="catgeorie_id" value="<?php echo $categorie_list['categories_id'] ?>">
+          </form>
+          <form action="" method="post">
+          <button class="btn-delete" name="btn_delete"  value="delete">Supprimer</button>
+          <input type="text" class="id" name="catgeorie_id" value="<?php echo $categorie_list['categories_id'] ?>">
+          </form>
+          
+          
           </td>
         </tr>
         <?php } ?>
@@ -236,16 +258,6 @@
     <form method="post">
       <input type="text" placeholder="Nom de la Catégorie" name="add_categorie" required>
       <button type="submit" name="btn_add">Enregistrer</button>
-    </form>
-  </div>
-
-  <!-- Modify Form -->
-  <div class="hidden-form modify-form" id="modifyForm">
-    <button class="btn-exit" onclick="hideForms()">X</button>
-    <h3>Modifier une Catégorie</h3>
-    <form method="post">
-      <input type="text" placeholder="Nom de la Catégorie" required>
-      <button type="submit" name="btn_modify">Modifier</button>
     </form>
   </div>
 

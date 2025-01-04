@@ -25,10 +25,10 @@ CREATE TABLE articles (
     FOREIGN KEY (category_id) REFERENCES categories(categories_id) ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
-CREATE TABLE categories (
-    categories_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
+    CREATE TABLE categories (
+        categories_id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL
+    );
 
 
 -- isert some data for testing
