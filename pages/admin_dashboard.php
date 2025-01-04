@@ -21,7 +21,7 @@
         
     }    
    }
-   $categorie_list = $categorie->read_categorie();
+
 
 ?>
 <!DOCTYPE html>
@@ -212,7 +212,7 @@
         </tr>
       </thead>
       <tbody>
-        <?php while($categorie_list){ ?>
+        <?php while($categorie_list = $categorie->read_categorie()){ ?>
         <tr>
           <td><?php echo $categorie_list['name'] ?></td>
           <td class="id"><?php echo $categorie_list['categories_id'] ?></td>
