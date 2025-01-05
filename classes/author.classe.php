@@ -153,6 +153,36 @@ class articl {
             die("An error in rejecting article: " . $error->getMessage());
         }
     }
+
+
+
+    public function add_article($title, $content, $categorie_id, $author_id){
+
+        try{ 
+
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+    
+            $sql = "INSERT INTO articles (title, content, author_id, category_id) VALUES(:title, :content, :author_id, :categorie_id);";
+    
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':title', $title, PDO::PARAM_STR);
+            $query->bindParam(':content', $content, PDO::PARAM_STR);
+            $query->bindParam(':author_id', $author_id, PDO::PARAM_INT);
+            $query->bindParam(':categorie_id', $category_id, PDO::PARAM_INT);
+
+            
+            $query->execute(); 
+            $db_connect->disconnect(); 
+
+        }catch(PDOException $error){
+          die("an error while adding an article" . $error->getMessage());
+        }  
+    }
     } 
+
+
+
 
 ?>
