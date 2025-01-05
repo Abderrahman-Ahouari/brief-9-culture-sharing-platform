@@ -150,7 +150,35 @@ $hashed_password = password_hash($password,PASSWORD_DEFAULT);
         session_start();
         session_unset();
         session_destroy();
-    }   
+    }
+    
+    
+
+    public function get_user_info($id){
+
+        try {
+            $db_connect = new Database_connection;
+            $connection = $db_connect->connect();
+            
+            $sql="SELECT first_name, last_name, email, phone FROM users WHERE users_id= :id ;";
+        
+            $query = $connection->prepare($sql);
+    
+            $query->bindParam(':id' , $id , PDO::PARAM_STR);
+    
+            $query->execute();
+    
+            $user_info = $query->fetch(PDO::FETCH_ASSOC);
+    
+            $db_connect->disconnect();
+    
+            return $user_info;
+
+        } catch (PDOExeption $error) {
+            die("an error in getting user info : " . $error->getMessage()); 
+        }
+
+    }
 
 }  
      

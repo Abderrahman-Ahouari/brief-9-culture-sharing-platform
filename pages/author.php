@@ -1,15 +1,19 @@
 <?php
+    require('../classes/user_classe.php');
+     
+    session_start();
+    if($_SESSION['role'] === "admin"){
+      header("location: admin_dashboard.php");
+    }
+    elseif($_SESSION['role'] === "user"){
+      header("location: home.php");
+    }
+    elseif(!$_SESSION){
+    header("location: signup.php");
+    }
 
-session_start();
-if($_SESSION['role'] === "admin"){
-  header("location: admin_dashboard.php");
-}
-elseif($_SESSION['role'] === "user"){
-  header("location: home.php");
-}
-elseif(!$_SESSION){
- header("location: signup.php");
-}
+    $user = new users;
+    $user_id = $_SESSION['id'];
 
 ?>
 <!DOCTYPE html>
@@ -151,12 +155,15 @@ elseif(!$_SESSION){
 <body>
   <div class="container">
     <!-- Profile Section -->
+     <?php  
+       $user_info = $user->get_user_info($user_id);
+     ?>
     <div class="profile">
       <img src="user-photo.jpg" alt="Photo de l'utilisateur">
       <div class="profile-info">
-        <h2>Prénom Nom</h2>
-        <p>Email: utilisateur@example.com</p>
-        <p>Téléphone: 0123456789</p>
+        <h2><?php echo $user_info['first_name'] . $user_info['last_name']; ?></h2>
+        <p>Email: <?php echo $user_info['email']; ?></p>
+        <p>Téléphone: <?php echo $user_info['phone']; ?></p>
         <a href="add_article.php"><button class="creat_article">créer un article</button></a>
       </div>
 
