@@ -21,7 +21,7 @@
       $content = $_POST['content'];
       $category_id = $_POST['category'];
       $article->add_article(  $title , $content , $category_id , $author_id );
-      // header("location: author.php");
+      header("location: author.php");
   }
 ?>
 <!DOCTYPE html>
