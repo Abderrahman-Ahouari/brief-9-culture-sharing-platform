@@ -170,7 +170,7 @@ class articl {
             $query->bindParam(':title', $title, PDO::PARAM_STR);
             $query->bindParam(':content', $content, PDO::PARAM_STR);
             $query->bindParam(':author_id', $author_id, PDO::PARAM_INT);
-            $query->bindParam(':categorie_id', $category_id, PDO::PARAM_INT);
+            $query->bindParam(':categorie_id', $categorie_id, PDO::PARAM_INT);
 
             
             $query->execute(); 
