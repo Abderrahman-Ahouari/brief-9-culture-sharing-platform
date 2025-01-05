@@ -152,7 +152,7 @@ if(!$_SESSION){
 
             <button type="submit" class="btn btn-signup">Signup</button>
         </form>
-        <a href="login.html" class="btn btn-login">Already have an account? Login</a>
+        <a href="login.php" class="btn btn-login">Already have an account? Login</a>
     </div>
 </body>
 </html>

@@ -1,11 +1,12 @@
 <?php
+  session_start();
 if($_SESSION['role'] === "admin"){
   header("location: admin_dashboard.php");
 }
 elseif($_SESSION['role'] === "user"){
   header("location: home.php");
 }
-elseif(!$_SESSION['role']){
+elseif(!$_SESSION){
  header("location: signup.php");
 }
 ?>

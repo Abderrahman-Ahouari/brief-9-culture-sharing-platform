@@ -4,8 +4,6 @@
       session_start();
       if($_SESSION){
               header("location: home.php");
-    }else{
-
     }
 
    
@@ -134,7 +132,7 @@
 
             <button type="submit" class="btn btn-login">Login</button>
         </form>
-        <a href="signup.html" class="btn btn-signup">Don't have an account? Signup</a>
+        <a href="signup.php" class="btn btn-signup">Don't have an account? Signup</a>
     </div>
 </body>
 </html>
