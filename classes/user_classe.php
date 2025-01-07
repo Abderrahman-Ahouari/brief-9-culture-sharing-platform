@@ -125,7 +125,6 @@ class users{
 
 
         public function login($email, $password){
-            session_start();
             try{
                 $db_connect = new Database_connection;
                 $connection = $db_connect->connect();
@@ -156,9 +155,9 @@ class users{
         }
         
         public function logout(){
-            session_start();
             session_unset();
             session_destroy();
+            header("location: ../pages/signup.php");
         }
         
         

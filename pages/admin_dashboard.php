@@ -4,6 +4,7 @@
       require('../classes/connection.php');
       require('../classes/article.classe.php');
 
+
    
    session_start(); 
    if($_SESSION['role'] === "user"){
@@ -20,6 +21,7 @@
    $categorie = new categorie;
    $admin = new admin;
    $articles = new articl;
+   $user = new users;
    
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -47,6 +49,10 @@
     elseif (isset($_POST['reject'])) {
       $article_id = $_POST['article_id'];
       $admin->reject_articl($article_id);
+    }
+
+    elseif(isset($_POST['logout'])){
+       $user->logout();
     }
     
       
@@ -137,9 +143,7 @@
 
     /* Add Button Styling */
     .btn-add {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+
       padding: 10px 20px;
       background-color: #FF7F50;
       color: white;
@@ -229,6 +233,27 @@
       background: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
+    .container_btns{
+        display: flex;
+        justify-content : space-between;
+        max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+    .btn-logout{
+      padding: 10px 20px;
+      background-color: #FF7F50;
+      color: white;
+      font-size: 14px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
   </style>
   <style>
     body {
@@ -303,10 +328,18 @@
   </style>
 </head>
 <body>
+  <div class="container_btns">
+    <button class="btn-add" onclick="showAddForm()">Ajouter une Catégorie</button>
+    <form method="post">
+     <button class="btn-logout" name="logout">Logout</button>
+    </form>
+    
+
+  </div>
   <div class="container">
     <h2>Tableau de Bord Admin</h2>
-    <button class="btn-add" onclick="showAddForm()">Ajouter une Catégorie</button>
     <table>
+
       <thead>
         <tr>
           <th>Nom de la Catégorie</th>
@@ -314,6 +347,7 @@
         </tr>
       </thead>
       <tbody>
+
         <?php 
         $list = $categorie->read_categorie();
         foreach($list as $categorie_list){ ?>
@@ -336,6 +370,8 @@
         <?php } ?>
       </tbody>
     </table>
+
+
   </div>
 
   <!-- Add Form -->
@@ -396,11 +432,6 @@
   <script>
     function showAddForm() {
       document.getElementById('addForm').style.display = 'block';
-      document.querySelector('.overlay').style.display = 'block';
-    }
-
-    function showModifyForm() {
-      document.getElementById('modifyForm').style.display = 'block';
       document.querySelector('.overlay').style.display = 'block';
     }
 
