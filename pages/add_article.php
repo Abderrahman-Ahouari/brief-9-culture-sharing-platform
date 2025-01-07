@@ -108,12 +108,12 @@
 <body>
   <div class="form-container">
     <h2>Ajouter un Article</h2>
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
       <label for="title">Titre</label>
       <input type="text" id="title" name="title" placeholder="Saisissez le titre de l'article" required>
 
       <label for="image">image(obligatoire)</label>
-      <input type="file" id="artcle_image" name="image" placeholder="enter your image" required>     
+      <input type="file" id="image" name="image" placeholder="enter your image" required>     
 
       <label for="content">Contenu</label>
       <textarea id="content" name="content" rows="5" placeholder="Saisissez le contenu de l'article" required></textarea>

@@ -93,7 +93,7 @@ class users{
             $file_name = basename($_FILES['image']['name']);
             $image_path = $upload_folder . $file_name;
 
-          if(!move_uploaded_file($_FILES['image'] ['tmp_name'], $image_path)){
+          if(!move_uploaded_file($_FILES['image']['tmp_name'], $image_path)){
                 echo "error in uploading yhr folder";
           }        
 
