@@ -1,9 +1,10 @@
 <?php
 require('../classes/user_classe.php');
+require('../classes/connection.php');
 session_start();
 if(!$_SESSION){
 }else{
-  header("location: home.php");
+  header("Location: home.php");
 }
     if($_SERVER["REQUEST_METHOD"] === 'POST'){
       $first_name = $_POST['first-name'];
@@ -15,8 +16,13 @@ if(!$_SESSION){
 
       $user = new users();
       $user->signup($first_name, $last_name, $email, $phone,$password, $role);
-      header("location: home.php");   
-    } 
+      header("location: home.php");  
+
+
+      
+    }
+    
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -119,7 +125,7 @@ if(!$_SESSION){
 <body>
     <div class="container">
         <h1>Signup</h1>
-        <form method="POST">
+        <form method="POST"  enctype="multipart/form-data" >
             <div class="form-group">
                 <label for="first-name">First Name</label>
                 <input type="text" id="first-name" name="first-name" required>
@@ -148,6 +154,10 @@ if(!$_SESSION){
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="photo">profile photo</label>
+                <input type="file" class="img" id="image" name="image" required>
             </div>
 
             <button type="submit" class="btn btn-signup">Signup</button>

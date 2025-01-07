@@ -1,5 +1,4 @@
  <?php
- require('connection.php');
 class users{
         private $id;
         private $first_name;
@@ -90,99 +89,109 @@ class users{
         $db_connect = new Database_connection;
         $connection = $db_connect->connect();
 
-        $sql = "INSERT INTO users(first_name, last_name, email, phone, password, role) 
-VALUES(:first_name, :last_name, :email, :phone, :password , :role);";
+            $upload_folder = "../Uploads/";
+            $file_name = basename($_FILES['image']['name']);
+            $image_path = $upload_folder . $file_name;
 
-$hashed_password = password_hash($password,PASSWORD_DEFAULT);
+          if(!move_uploaded_file($_FILES['image'] ['tmp_name'], $image_path)){
+                echo "error in uploading yhr folder";
+          }        
 
-        $query = $connection->prepare($sql);
+        $sql = "INSERT INTO users(first_name, last_name, email, image, phone, password, role) 
+    VALUES(:first_name, :last_name, :email, :image, :phone, :password , :role );";
 
-        $query->bindParam(':first_name', $first_name, PDO::PARAM_STR);
-        $query->bindParam(':last_name', $last_name, PDO::PARAM_STR);
-        $query->bindParam(':email', $email, PDO::PARAM_STR);
-        $query->bindParam(':phone', $phone, PDO::PARAM_STR);
-        $query->bindParam(':password', $hashed_password, PDO::PARAM_STR);
-        $query->bindParam(':role', $role, PDO::PARAM_STR);   
-        
-        $query->execute(); 
-        $db_connect->disconnect(); 
+    $hashed_password = password_hash($password,PASSWORD_DEFAULT);
 
-    $_SESSION['id'] = $connection->lastInsertId();
-    $_SESSION['role'] = $role;
-    }catch(PDOException $error){
-      die("an error while registering" . $error->getMessage());
-    }   
-             }
-
-
-    public function login($email, $password){
-        session_start();
-        try{
-            $db_connect = new Database_connection;
-            $connection = $db_connect->connect();
-            
-            $sql="SELECT * FROM users WHERE email=:email;";
-    
             $query = $connection->prepare($sql);
-    
+
+            $query->bindParam(':first_name', $first_name, PDO::PARAM_STR);
+            $query->bindParam(':last_name', $last_name, PDO::PARAM_STR);
             $query->bindParam(':email', $email, PDO::PARAM_STR);
+            $query->bindParam(':image', $image_path, PDO::PARAM_STR); 
+            $query->bindParam(':phone', $phone, PDO::PARAM_STR);
+            $query->bindParam(':password', $hashed_password, PDO::PARAM_STR);
+            $query->bindParam(':role', $role, PDO::PARAM_STR);   
     
-            $query->execute();
-            $user = $query->fetch(PDO::FETCH_ASSOC);
-
-                
-                if($user && password_verify($password, $user['password']) ){
-                $_SESSION['id'] = $user['id'];             
-                $_SESSION['role'] = $user['role'];
-            }else{
-                die("Invalid email or password.");
-            }
-      
-            $db_connect->disconnect();
-
-        }catch (PDOException $error) {
-            die("An error in login: " . $error->getMessage());
-        }
-        
-    }
-    
-    public function logout(){
-        session_start();
-        session_unset();
-        session_destroy();
-    }
-    
-    
-
-    public function get_user_info($id){
-
-        try {
-            $db_connect = new Database_connection;
-            $connection = $db_connect->connect();
             
-            $sql="SELECT first_name, last_name, email, phone FROM users WHERE users_id= :id ;";
-        
-            $query = $connection->prepare($sql);
-    
-            $query->bindParam(':id' , $id , PDO::PARAM_STR);
-    
-            $query->execute();
-    
-            $user_info = $query->fetch(PDO::FETCH_ASSOC);
-    
-            $db_connect->disconnect();
-    
-            return $user_info;
+            $query->execute(); 
+            $db_connect->disconnect(); 
 
-        } catch (PDOExeption $error) {
-            die("an error in getting user info : " . $error->getMessage()); 
+        $_SESSION['id'] = $connection->lastInsertId();
+        $_SESSION['role'] = $role;
+        }catch(PDOException $error){
+        die("an error while registering" . $error->getMessage());
+        }   
+                }
+
+
+        public function login($email, $password){
+            session_start();
+            try{
+                $db_connect = new Database_connection;
+                $connection = $db_connect->connect();
+                
+                $sql="SELECT * FROM users WHERE email=:email;";
+        
+                $query = $connection->prepare($sql);
+        
+                $query->bindParam(':email', $email, PDO::PARAM_STR);
+        
+                $query->execute();
+                $user = $query->fetch(PDO::FETCH_ASSOC);
+
+                    
+                    if($user && password_verify($password, $user['password']) ){
+                    $_SESSION['id'] = $user['id'];             
+                    $_SESSION['role'] = $user['role'];
+                }else{
+                    die("Invalid email or password.");
+                }
+        
+                $db_connect->disconnect();
+
+            }catch (PDOException $error) {
+                die("An error in login: " . $error->getMessage());
+            }
+            
+        }
+        
+        public function logout(){
+            session_start();
+            session_unset();
+            session_destroy();
+        }
+        
+        
+
+        public function get_user_info($id){
+
+            try {
+                $db_connect = new Database_connection;
+                $connection = $db_connect->connect();
+                
+                $sql="SELECT first_name, last_name, email, phone FROM users WHERE users_id= :id ;";
+            
+                $query = $connection->prepare($sql);
+        
+                $query->bindParam(':id' , $id , PDO::PARAM_STR);
+        
+                $query->execute();
+        
+                $user_info = $query->fetch(PDO::FETCH_ASSOC);
+        
+                $db_connect->disconnect();
+        
+                return $user_info;
+
+            } catch (PDOExeption $error) {
+                die("an error in getting user info : " . $error->getMessage()); 
+            }
+
         }
 
-    }
+    }  
+        
 
-}  
-     
+    ?>
 
-?>
-
-   
+    

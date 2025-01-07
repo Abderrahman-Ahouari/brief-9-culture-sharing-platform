@@ -1,5 +1,7 @@
 <?php
     require('../classes/user_classe.php');
+    require('../classes/connection.php');
+  
      
     session_start();
     if($_SESSION['role'] === "admin"){
@@ -11,7 +13,7 @@
     elseif(!$_SESSION){
     header("location: signup.php");
     }
-
+ 
     $user = new users;
     $user_id = $_SESSION['id'];
 

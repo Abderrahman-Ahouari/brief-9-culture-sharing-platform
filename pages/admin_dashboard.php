@@ -1,9 +1,11 @@
 <?php
-      require('../classes/author.classe.php');
-      
+      require('../classes/categorie.classe.php');
+      require('../classes/admin.classe.php');
+      require('../classes/connection.php');
+      require('../classes/article.classe.php');
 
    
-   session_start();
+   session_start(); 
    if($_SESSION['role'] === "user"){
      header("location: home.php");
    }
@@ -15,34 +17,36 @@
   }
 
 
-   $categorie = new admin;
+   $categorie = new categorie;
+   $admin = new admin;
    $articles = new articl;
+   
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if (isset($_POST['btn_delete'])) {
        $categorie_id = $_POST['catgeorie_id'];
-       $categorie->delete_categorie($categorie_id);
+       $admin->delete_categorie($categorie_id);
     } 
     
     elseif (isset($_POST['btn_add'])) {
        $name= $_POST['add_categorie'];
-       $categorie->add_categorie($name);
+       $admin->add_categorie($name);
     } 
     
     elseif (isset($_POST['btn_modify'])) {
       $new_name = $_POST['new_name'];
       $categorie_id = $_POST['catgeorie_id'];
-      $categorie->modify_categorie($new_name, $categorie_id);
+      $admin->modify_categorie($new_name, $categorie_id);
     } 
     
     elseif (isset($_POST['accept'])) {
       $article_id = $_POST['article_id'];
-      $articles->accept_articl($article_id);
+      $admin->accept_articl($article_id);
     } 
       
     elseif (isset($_POST['reject'])) {
       $article_id = $_POST['article_id'];
-      $articles->reject_articl($article_id);
+      $admin->reject_articl($article_id);
     }
     
       
