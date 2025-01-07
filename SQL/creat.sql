@@ -65,7 +65,7 @@ CREATE TABLE commentairs (
 CREATE TABLE Taged_articles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tag_id INT,
-         INT,
+        article_id INT,
     FOREIGN KEY (tag_id) REFERENCES tags(tag_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (article_id) REFERENCES articles(articles_id) ON DELETE CASCADE ON UPDATE CASCADE
     );
