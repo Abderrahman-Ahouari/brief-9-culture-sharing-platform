@@ -6,7 +6,7 @@ class Categorie {
     public function __construct($connection) {
         $this->connection = $connection;
     }
-
+ 
     public function read_categorie() {
         try { 
             $sql = "SELECT name, categories_id FROM categories;";

@@ -189,6 +189,31 @@ class users{
 
         }
 
+        public function get_all_users(){
+            try {
+                $db_connect = new Database_connection;
+                $connection = $db_connect->connect();
+    
+                $sql = "SELECT first_name, last_name, email, phone, users_id, image, role FROM users WHERE role= 'author' OR role= 'user' and statu = 'safe' ;";
+    
+                $query = $connection->prepare($sql);
+    
+                $query->execute();
+    
+                $users_list = $query->fetchAll(PDO::FETCH_ASSOC);
+    
+                $db_connect->disconnect();
+    
+                return $users_list;
+            } catch (PDOExeption $error) {
+                die("an error in getting users info: " . $error->getMessage()); 
+               }
+
+
+
+
+        }
+
     }  
         
 

@@ -77,6 +77,11 @@
     $name= $_POST['add_categorie'];
     $admin->add_tag($name);
   } 
+
+  elseif (isset($_POST['ban-button'])) {
+     $id = $_POST['catgeorie_id'];
+     $admin->user_bann($id);
+  }
     
       
    }
@@ -348,6 +353,124 @@
     .btn-reject:hover {
       background-color: #c0392b;
     }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .rounded-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .ban-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .ban-button:hover {
+            background-color: darkred;
+        }
+  </style>
+  <style> 
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table th, table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+
+    table th {
+        background-color: #f8f8f8;
+        color: #333;
+    }
+
+    .rounded-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .ban-button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .ban-button:hover {
+        background-color: darkred;
+    }
+
   </style>
 </head>
 <body>
@@ -502,6 +625,43 @@
     </table>
 
 
+  </div>
+
+
+
+  <div class="container">
+        <h1>Users Management</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+  <?php 
+    $users_list = $user->get_all_users();
+    foreach($users_list as $user_list){
+  ?>
+                <tr>
+                    <td><img src="<?php echo $user_list['image'] ?>" alt="Profile" class="rounded-image"></td>
+                    <td><?php echo $user_list['first_name'] ?></td>
+                    <td><?php echo $user_list['last_name'] ?></td>
+                    <td><?php echo $user_list['email'] ?></td>
+                    <td><?php echo $user_list['phone'] ?></td>
+                    <td><?php echo $user_list['role'] ?></td>
+                    <td><form action="" method="post"><button class="ban-button" name="ban-button">Ban</button>
+                    <input type="text" class="id" name="catgeorie_id" value="<?php echo $user_list['users_id'] ; ?>">
+                  </form></td>
+                </tr>
+              <?php } ?>
+            </tbody>
+        </table>
   </div>
 
   <script>

@@ -6,7 +6,7 @@ class admin extends users {
 
     public function __construct($connection) {
         $this->connection = $connection;
-    }
+    } 
 
     public function accept_article($id) {
         try {
@@ -99,6 +99,32 @@ class admin extends users {
             die("An error in deleting tag: " . $error->getMessage());
         }
     }
+
+
+    public function user_bann($id) {
+        try {
+            $sql = "UPDATE users SET statu = :statu WHERE users_id = :id;";
+            $query = $this->connection->prepare($sql);
+              $status = 'banned';
+            $query->bindParam(':statu',$status , PDO::PARAM_STR);
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+            $query->execute();
+        } catch (PDOException $error) {
+            die("An error in banning user: " . $error->getMessage());
+        }
+    }
+
+    public function comment_delete($id) {
+        try {
+            $sql = "DELETE FROM commentairs WHERE comment_id = :id;";
+            $query = $this->connection->prepare($sql);
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
+            $query->execute();
+        } catch (PDOException $error) {
+            die("An error in deleting comment: " . $error->getMessage());
+        }
+    }
+    
 }
 
 ?>
