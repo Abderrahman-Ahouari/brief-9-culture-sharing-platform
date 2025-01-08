@@ -126,6 +126,7 @@ class users{
 
         public function login($email, $password){
             try{
+                session_start();
                 $db_connect = new Database_connection;
                 $connection = $db_connect->connect();
                 
@@ -140,7 +141,7 @@ class users{
 
                     
                     if($user && password_verify($password, $user['password']) ){
-                    $_SESSION['id'] = $user['id'];             
+                    $_SESSION['id'] = $user['users_id'];             
                     $_SESSION['role'] = $user['role'];
                 }else{
                     die("Invalid email or password.");
@@ -168,7 +169,7 @@ class users{
                 $db_connect = new Database_connection;
                 $connection = $db_connect->connect();
                 
-                $sql="SELECT first_name, last_name, email, phone FROM users WHERE users_id= :id ;";
+                $sql="SELECT first_name, last_name, email, phone, image FROM users WHERE users_id= :id ;";
             
                 $query = $connection->prepare($sql);
         

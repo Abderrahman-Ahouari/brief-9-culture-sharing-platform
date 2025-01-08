@@ -17,6 +17,10 @@
     $user = new users;
     $user_id = $_SESSION['id'];
 
+      if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+          $user->Logout();
+      }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -136,7 +140,38 @@
               border-radius: 15px;
               cursor: default;
             }
-
+            .container_btns{
+        display: flex;
+        justify-content : space-between;
+        max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+         
+    .btn-logout{
+      padding: 10px 20px;
+      background-color: #FF7F50;
+      color: white;
+      font-size: 14px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .btn_add{
+      padding: 10px 20px;
+      background-color: #FF7F50;
+      color: white;
+      font-size: 14px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
             @media (max-width: 768px) {
               .profile {
                 flex-direction: column;
@@ -155,13 +190,20 @@
  </style>
 </head>
 <body>
+<div class="container_btns">
+    <form method="post">
+     <button class="btn-logout" name="logout">Logout</button>
+    </form>
+    
+
+  </div>
   <div class="container">
     <!-- Profile Section -->
      <?php  
        $user_info = $user->get_user_info($user_id);
      ?>
     <div class="profile">
-      <img src="user-photo.jpg" alt="Photo de l'utilisateur">
+      <img src="<?php echo $user_info['image']; ?>" alt="Photo de l'utilisateur">
       <div class="profile-info">
         <h2><?php echo $user_info['first_name'] . $user_info['last_name']; ?></h2>
         <p>Email: <?php echo $user_info['email']; ?></p>
