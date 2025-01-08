@@ -1,6 +1,7 @@
 <?php
       require('../classes/connection.php');
       require('../classes/categorie.classe.php');
+      require('../classes/user_classe.php');
       require('../classes/author.classe.php');
    
 
@@ -14,8 +15,13 @@
     elseif(!$_SESSION){
     header("location: signup.php");
     }
-  $categories = new categorie;
-  $article = new author;
+
+    $db_connect = new Database_connection;
+    $connection = $db_connect->connect();
+    $disconnect = $db_connect->disconnect();
+
+  $categories = new categorie($connection);
+  $article = new author($connection,$disconnect);
   $author_id = $_SESSION['id'];
 
    if ($_SERVER['REQUEST_METHOD'] === 'POST') {

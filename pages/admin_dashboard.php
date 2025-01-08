@@ -1,8 +1,11 @@
 <?php
+      require('../classes/connection.php');
+      require('../classes/user_classe.php');
       require('../classes/categorie.classe.php');
       require('../classes/admin.classe.php');
-      require('../classes/connection.php');
       require('../classes/article.classe.php');
+      require('../classes/tags.classe.php');
+
 
 
    
@@ -17,12 +20,16 @@
     header("location: signup.php");
   }
 
+  $db_connect = new Database_connection;
+  $connection = $db_connect->connect();
+  $disconnect = $db_connect->disconnect();
 
-   $categorie = new categorie;
-   $admin = new admin;
-   $articles = new articl;
+   $categorie = new categorie($connection);
+   $admin = new admin($connection);
+   $articles = new articl($connection);
    $user = new users;
-   
+   $tags = new tags($connection,$disconnect);
+    
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if (isset($_POST['btn_delete'])) {
@@ -54,6 +61,22 @@
     elseif(isset($_POST['logout'])){
        $user->logout();
     }
+
+    elseif (isset($_POST['btn_delete_tag'])) {
+      $tag_id = $_POST['catgeorie_id'];
+      $admin->delete_tag($tag_id);
+   } 
+
+   elseif (isset($_POST['btn_modify_tag'])) {
+     $new_name = $_POST['new_name'];
+     $tag_id = $_POST['catgeorie_id'];
+     $admin->modify_tag($new_name, $tag_id);
+   } 
+
+   elseif (isset($_POST['btn_add_tag'])) {
+    $name= $_POST['add_categorie'];
+    $admin->add_tag($name);
+  } 
     
       
    }
@@ -384,6 +407,16 @@
       <button type="submit" name="btn_add">Enregistrer</button>
     </form>
   </div>
+    <!-- Add Form -->
+    <div class="overlay" onclick="hideForms2()"></div>
+  <div class="hidden-form add-form" id="addForm2">
+    <button class="btn-exit" onclick="hideForms2()">X</button>
+    <h3>Ajouter une tag</h3>
+    <form method="post">
+      <input type="text" placeholder="Nom de la Catégorie" name="add_categorie" required>
+      <button type="submit" name="btn_add_tag">Enregistrer</button>
+    </form>
+  </div>
 
 
 
@@ -426,8 +459,50 @@
     </table>
   </div>
 
+  <div class="container_btns">
+    <button class="btn-add" onclick="showAddForm2()">Ajouter une tag</button>
+
+    
+
+  </div>
+
+  <div class="container">
+    <h2>Tableau de Bord Admin</h2>
+    <table>
+
+      <thead>
+        <tr>
+          <th>Nom de la Tag</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <?php 
+        $Tag_list = $tags->read_tags();
+        foreach($Tag_list as $tag_list){ ?>
+        <tr>
+          <td><?php echo $tag_list['tag_name'] ?></td>
+          <td>
+          <form action="" method="post">
+          <input type="text" class="new_name" name="new_name">
+          <button class="btn-update" name="btn_modify_tag" onclick="">Modifier</button>
+          <input type="text" class="id" name="catgeorie_id" value="<?php echo $tag_list['tag_id'] ?>">
+          </form>
+          <form action="" method="post">
+          <button class="btn-delete" name="btn_delete_tag"  value="delete">Supprimer</button>
+          <input type="text" class="id" name="catgeorie_id" value="<?php echo $tag_list['tag_id'] ?>">
+          </form>
+          
+          
+          </td>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
 
 
+  </div>
 
   <script>
     function showAddForm() {
@@ -437,7 +512,16 @@
 
     function hideForms() {
       document.getElementById('addForm').style.display = 'none';
-      document.getElementById('modifyForm').style.display = 'none';
+      document.querySelector('.overlay').style.display = 'none';
+    }
+
+    function showAddForm2() {
+      document.getElementById('addForm2').style.display = 'block';
+      document.querySelector('.overlay').style.display = 'block';
+    }
+
+    function hideForms2() {
+      document.getElementById('addForm2').style.display = 'none';
       document.querySelector('.overlay').style.display = 'none';
     }
   </script>
