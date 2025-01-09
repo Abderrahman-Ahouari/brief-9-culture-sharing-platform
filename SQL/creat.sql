@@ -210,5 +210,5 @@ UPDATE articles set status = 'published' where articles_id ='';
 -- query to reject an articl
 UPDATE articles set status = 'rejected' where articles_id ='';
 
--- get all users to display in admin page
-SELECT first_name, last_name, email, phone, users_id, image, role FROM users WHERE role= 'author' OR role= 'user';
+-- get all safe users to display in admin page
+SELECT * FROM users WHERE statu = 'safe' and role= 'author' OR role= 'user' and statu = 'safe';

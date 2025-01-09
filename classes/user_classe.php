@@ -194,7 +194,7 @@ class users{
                 $db_connect = new Database_connection;
                 $connection = $db_connect->connect();
     
-                $sql = "SELECT first_name, last_name, email, phone, users_id, image, role FROM users WHERE role= 'author' OR role= 'user' and statu = 'safe' ;";
+                $sql = "SELECT * FROM users WHERE statu = 'safe' and role= 'author' OR role= 'user' and statu = 'safe';";
     
                 $query = $connection->prepare($sql);
     
