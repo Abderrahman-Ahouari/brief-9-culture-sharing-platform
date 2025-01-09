@@ -22,14 +22,14 @@ DELETE FROM taged_articles;
         first_name VARCHAR(100) NOT NULL,
         last_name VARCHAR(100) NOT NULL, 
         email VARCHAR(150) UNIQUE NOT NULL,
-        image VARCHAR(500),
+        image_profile VARCHAR(500),
         phone VARCHAR(15) NOT NULL,
         password VARCHAR(255) UNIQUE NOT NULL,
         role ENUM('author', 'user', 'admin') NOT NULL,
         statu ENUM('safe', 'banned') DEFAULT 'safe'
     ); 
     
-        CREATE TABLE categories (
+            CREATE TABLE categories (
             categories_id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(100) NOT NULL
         );
@@ -56,7 +56,7 @@ CREATE TABLE commentairs (
     comment_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     article_id INT,
-    content TEXT not null,
+    comment_content TEXT not null,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(users_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (article_id) REFERENCES articles(articles_id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -88,7 +88,7 @@ CREATE TABLE likes (
 
 -- isert some data for testing
 
-INSERT INTO users (first_name, last_name, email, image, phone, password, role, statu)
+INSERT INTO users (first_name, last_name, email, image_profile, phone, password, role, statu)
 VALUES 
 ('John', 'Doe', 'john.doe@example.com', 'john.jpg', '1234567890', 'hashedpassword123', 'author', 'safe'),
 ('Jane', 'Smith', 'jane.smith@example.com', 'jane.jpg', '0987654321', 'hashedpassword456', 'user', 'safe'),
@@ -136,7 +136,7 @@ VALUES
 (2, 6),
 (1, 6);
 
-INSERT INTO likes (user_id, article_id)
+I   NSERT INTO likes (user_id, article_id)
 VALUES 
 (2, 1),
 (3, 2),
@@ -144,12 +144,12 @@ VALUES
 (5, 6),
 (1, 4);
 
-INSERT INTO commentairs (user_id, article_id, content)
+INSERT INTO commentairs (user_id, article_id, comment_content)
 VALUES 
-(1, 1, 'Great article on PHP!'),
+(1, 1, 'Great HHHHHHH'),
 (2, 2, 'CSS tips were very helpful.'),
 (3, 3, 'Interesting health tips.'),
-(4, 4, 'Can’t wait to visit these places.'),
+(4, 4, 'Cant wait to visit these places.'),
 (5, 5, 'JavaScript techniques are amazing.');
 
 
@@ -209,3 +209,16 @@ UPDATE articles set status = 'published' where articles_id ='';
 
 -- query to reject an articl
 UPDATE articles set status = 'rejected' where articles_id ='';
+
+-- get all safe users to display in admin page
+SELECT * FROM users WHERE statu = 'safe' and role= 'author' OR role= 'user' and statu = 'safe';
+
+-- get all comments to display on the admin dashboard
+SELECT comment_id, comment_content, created_at, title, first_name, last_name, image FROM commentairs
+INNER JOIN  users ON users.users_id = commentairs.user_id
+INNER JOIN articles ON articles.articles_id =commentairs.article_id;
+
+
+-- insert tagged articles
+SELECT categories
+

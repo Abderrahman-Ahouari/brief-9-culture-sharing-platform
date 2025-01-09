@@ -97,8 +97,8 @@ class users{
                 echo "error in uploading yhr folder";
           }        
 
-        $sql = "INSERT INTO users(first_name, last_name, email, image, phone, password, role) 
-    VALUES(:first_name, :last_name, :email, :image, :phone, :password , :role );";
+        $sql = "INSERT INTO users(first_name, last_name, email, image_profile, phone, password, role) 
+            VALUES(:first_name, :last_name, :email, :image, :phone, :password , :role );";
 
     $hashed_password = password_hash($password,PASSWORD_DEFAULT);
 
@@ -126,6 +126,7 @@ class users{
 
         public function login($email, $password){
             try{
+                session_start();
                 $db_connect = new Database_connection;
                 $connection = $db_connect->connect();
                 
@@ -140,7 +141,7 @@ class users{
 
                     
                     if($user && password_verify($password, $user['password']) ){
-                    $_SESSION['id'] = $user['id'];             
+                    $_SESSION['id'] = $user['users_id'];             
                     $_SESSION['role'] = $user['role'];
                 }else{
                     die("Invalid email or password.");
@@ -155,20 +156,20 @@ class users{
         }
         
         public function logout(){
-            session_unset();
+            session_unset();    
             session_destroy();
             header("location: ../pages/signup.php");
         }
         
         
-
+ 
         public function get_user_info($id){
 
             try {
                 $db_connect = new Database_connection;
                 $connection = $db_connect->connect();
                 
-                $sql="SELECT first_name, last_name, email, phone FROM users WHERE users_id= :id ;";
+                $sql="SELECT first_name, last_name, email, phone, image_profile FROM users WHERE users_id= :id ;";
             
                 $query = $connection->prepare($sql);
         
@@ -185,6 +186,31 @@ class users{
             } catch (PDOExeption $error) {
                 die("an error in getting user info : " . $error->getMessage()); 
             }
+
+        }
+
+        public function get_all_users(){
+            try {
+                $db_connect = new Database_connection;
+                $connection = $db_connect->connect();
+    
+                $sql = "SELECT * FROM users WHERE statu = 'safe' and role= 'author' OR role= 'user' and statu = 'safe';";
+    
+                $query = $connection->prepare($sql);
+    
+                $query->execute();
+    
+                $users_list = $query->fetchAll(PDO::FETCH_ASSOC);
+    
+                $db_connect->disconnect();
+    
+                return $users_list;
+            } catch (PDOExeption $error) {
+                die("an error in getting users info: " . $error->getMessage()); 
+               }
+
+
+
 
         }
 

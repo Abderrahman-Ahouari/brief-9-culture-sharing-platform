@@ -1,7 +1,9 @@
 <?php
       require('../classes/connection.php');
       require('../classes/categorie.classe.php');
+      require('../classes/user_classe.php');
       require('../classes/author.classe.php');
+      require('../classes/tags.classe.php');
    
 
       session_start();
@@ -14,16 +16,26 @@
     elseif(!$_SESSION){
     header("location: signup.php");
     }
-  $categories = new categorie;
-  $article = new author;
+
+    $db_connect = new Database_connection;
+    $connection = $db_connect->connect();
+    $disconnect = $db_connect->disconnect();
+
+  $categories = new categorie($connection,$disconnect);
+  $article = new author($connection,$disconnect);
+  $tags = new tags($connection,$disconnect);
+
+
   $author_id = $_SESSION['id'];
 
    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $title = $_POST['title'];
       $content = $_POST['content'];
       $category_id = $_POST['category'];
-      $article->add_article(  $title , $content , $category_id , $author_id );
-      header("location: author.php");
+      $article_id = $article->add_article($title , $content , $category_id , $author_id );
+      $tags_list = $_POST['tags'];
+      $tags->insert_article_tags($article_id, $tags_list);
+      
   }
 ?>
 <!DOCTYPE html>
@@ -124,6 +136,13 @@
         $categories_list = $categories->read_categorie();
         foreach($categories_list as $categorie ){?>
         <option value="<?php echo $categorie['categories_id']; ?>" ><?php echo $categorie['name']; ?></option>
+      <?php } ?>
+      </select>
+      <select name="tags[]" multiple id="tags" >
+      <?php
+        $tags_list = $tags->read_tags();
+        foreach($tags_list as $tag ){?>
+        <option value="<?php echo $tag['tag_id']; ?>" ><?php echo $tag['tag_name']; ?></option>
       <?php } ?>
       </select>
 

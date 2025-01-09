@@ -1,28 +1,28 @@
 <?php
 
-    class categorie{
-        public function read_categorie(){
-            try{ 
-                $db_connect = new Database_connection;
-                $connection = $db_connect->connect();
-                
-                $sql="SELECT name, categories_id FROM categories;";
-        
-                $query = $connection->prepare($sql);
-                
-                $query->execute();
-              
-                $categories = $query->fetchAll(PDO::FETCH_ASSOC);
-    
-                $db_connect->disconnect();
-                 
-                return $categories;  
-            }catch (PDOException $error) {
-                die("An error in getting categories: " . $error->getMessage());
-            }      
-        }
-    
-         
-        }
+class Categorie {
+    protected $connection;
+    protected $disconnect;
+
+    public function __construct($connection, $disconnect) {
+        $this->connection = $connection;
+        $this->disconnect = $disconnect;
+    }
+ 
+ 
+    public function read_categorie() {
+        try { 
+            $sql = "SELECT name, categories_id FROM categories;";
+            $query = $this->connection->prepare($sql);
+            $query->execute();
+            
+            $categories = $query->fetchAll(PDO::FETCH_ASSOC);
+            $this->disconnect;
+            return $categories;  
+        } catch (PDOException $error) {
+            die("An error in getting categories: " . $error->getMessage());
+        }      
+    }
+}
 
 ?>

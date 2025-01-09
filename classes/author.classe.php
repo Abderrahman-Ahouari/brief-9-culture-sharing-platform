@@ -1,27 +1,31 @@
 <?php
- require('user_classe.php');
 
- class author extends users{
+
+ class author extends users{ 
+  protected $connection;
+  protected $disconnect;
+
+  public function __construct($connection,$disconnect) {
+    $this->connection = $connection;
+    $this->disconnect = $disconnect;
+}
+
 
     public function add_article($title, $content, $categorie_id, $author_id){
 
         try{ 
-
-            $db_connect = new Database_connection;
-            $connection = $db_connect->connect();
-
-            
+          
           $upload_folder = "../Uploads/";
           $file_name = basename($_FILES['image']['name']);
           $image_path = $upload_folder . $file_name;
 
         if(!move_uploaded_file($_FILES['image']['tmp_name'], $image_path)){
-              echo "error in uploading yhr folder";
+              echo "error in uploading the folder";
         }      
 
             $sql = "INSERT INTO articles (title, content, author_id, category_id, image) VALUES(:title, :content, :author_id, :categorie_id, :image);";
     
-            $query = $connection->prepare($sql);
+            $query = $this->connection->prepare($sql);
     
             $query->bindParam(':title', $title, PDO::PARAM_STR);
             $query->bindParam(':content', $content, PDO::PARAM_STR);
@@ -31,12 +35,18 @@
 
             
             $query->execute(); 
-            $db_connect->disconnect(); 
-
+            $article_id = $this->connection->lastInsertId();
+            $this->disconnect;
+               return $article_id;
         }catch(PDOException $error){
           die("an error while adding an article" . $error->getMessage());
         }  
     }
+
+
+
+
+
     
  }
 
