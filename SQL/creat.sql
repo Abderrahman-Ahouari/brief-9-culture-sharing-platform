@@ -220,5 +220,5 @@ INNER JOIN articles ON articles.articles_id =commentairs.article_id;
 
 
 -- insert tagged articles
-
+SELECT categories
 

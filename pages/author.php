@@ -188,6 +188,129 @@
             }
 
  </style>
+<style>
+        /* Table Styles */
+    .articles-section {
+      margin: 20px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .articles-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .articles-table th, .articles-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .articles-table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .articles-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .articles-table th {
+      background-color: #FF7F50;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .articles-table td {
+      vertical-align: top;
+    }
+
+    .btn-modify, .btn-delete {
+      padding: 5px 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-modify {
+      background-color: #FF7F50;
+      color: white;
+    }
+
+    .btn-delete {
+      background-color: #D9534F;
+      color: white;
+    }
+
+    /* Popup Styles */
+    .popup-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .popup-content h3 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .popup-content label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    .popup-content input, .popup-content textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .popup-content .btn-submit {
+      background-color: #FF7F50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .popup-content .close-popup {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #333;
+    }
+
+</style>
 </head>
 <body>
 <div class="container_btns">
@@ -213,66 +336,93 @@
 
     </div>
 
-    <!-- Articles Section -->
-    <div class="articles">
-      <div class="card">
-        <h3>Titre de l'Article 1</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 2</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>  
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
-      <div class="card">
-        <h3>Titre de l'Article 3</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eros ut urna.</p>
-        <button>Catégorie</button>
-      </div>
 
-      <!-- Add more cards as needed -->
-    </div>
   </div>
+
+  <div class="container">
+  <table class="articles-table">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Date de Création</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Example row, replace with PHP -->
+      <tr>
+        <td>Exemple Titre</td>
+        <td>Exemple de description courte</td>
+        <td>2025-01-09</td>
+        <td>Publié</td>
+        <td>
+          <!-- Hidden input for ID -->
+          <input type="hidden" class="article-id" value="1">
+          <button class="btn-modify">Modifier</button>
+          <button class="btn-delete" onclick="deleteArticle(this)">Supprimer</button>
+        </td>
+      </tr>
+      <!-- Add more rows dynamically with PHP -->
+    </tbody>
+  </table>
+</div>
+
+<!-- Popup Form for Editing -->
+<div class="popup-container" id="popup-form">
+  <div class="popup-content">
+    <span class="close-popup" onclick="closePopup()">&times;</span>
+    <h3>Modifier l'Article</h3>
+    <form id="edit-article-form">
+      <input type="hidden" name="article-id" id="popup-article-id">
+      <div>
+        <label for="popup-title">Titre</label>
+        <input type="text" id="popup-title" name="title" required>
+      </div>
+      <div>
+        <label for="popup-content">Contenu</label>
+        <textarea id="popup-content" name="content" rows="5" required></textarea>
+      </div>
+      <div>
+        <label for="popup-category">Catégorie</label>
+        <input type="text" id="popup-category" name="category" required>
+      </div>
+      <button type="submit" class="btn-submit">Modifier</button>
+    </form>
+  </div>
+</div>
+
+<script>
+        function openPopup(button) {
+      const row = button.closest('tr');
+      const articleId = row.querySelector('.article-id').value;
+      const title = row.cells[0].textContent;
+      const description = row.cells[1].textContent;
+      const category = row.cells[3].textContent;
+
+      document.getElementById('popup-article-id').value = articleId;
+      document.getElementById('popup-title').value = title;
+      document.getElementById('popup-content').value = description;
+      document.getElementById('popup-category').value = category;
+
+      document.getElementById('popup-form').style.display = 'flex';
+    }
+
+    function closePopup() {
+      document.getElementById('popup-form').style.display = 'none';
+    }
+
+    function deleteArticle(button) {
+      const row = button.closest('tr');
+      const articleId = row.querySelector('.article-id').value;
+      if (confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) {
+        // Handle the delete logic here (PHP or AJAX call)
+        console.log("Suppression de l'article avec ID:", articleId);
+        row.remove(); // Remove the row from the table
+      }
+    }
+
+</script>
 </body>
 </html>

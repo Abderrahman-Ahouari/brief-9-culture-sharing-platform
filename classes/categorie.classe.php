@@ -16,7 +16,6 @@ class Categorie {
             $query = $this->connection->prepare($sql);
             $query->execute();
             
-            // Fetch all categories as an associative array
             $categories = $query->fetchAll(PDO::FETCH_ASSOC);
             $this->disconnect;
             return $categories;  

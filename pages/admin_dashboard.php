@@ -573,11 +573,11 @@
           <td><?php echo $articl['content']; ?></td>
           <td><?php echo $articl['publication_date']; ?></td>
           <td>
-            <form method="POST"  style="display:inline;">
+            <form method="POST"  style="display:inline;" >
               <input type="hidden" name="article_id" value="<?php echo $articl['articles_id']; ?>">
               <button type="submit" name="accept" class="btn-accept">Accepter</button>
             </form>
-            <form method="POST" style="display:inline;">
+            <form method="POST" style="display:inline;" >
               <input type="hidden" name="article_id" value="<?php echo $articl['articles_id']; ?>">
               <button type="submit" name="reject" class="btn-reject">Rejeter</button>
             </form>

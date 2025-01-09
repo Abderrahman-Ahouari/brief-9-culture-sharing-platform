@@ -42,6 +42,11 @@
           die("an error while adding an article" . $error->getMessage());
         }  
     }
+
+
+
+
+
     
  }
 
