@@ -65,7 +65,7 @@ CREATE TABLE commentairs (
 CREATE TABLE Taged_articles (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tag_id INT,
-    article_id INT,
+        article_id INT,
     FOREIGN KEY (tag_id) REFERENCES tags(tag_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (article_id) REFERENCES articles(articles_id) ON DELETE CASCADE ON UPDATE CASCADE
     );
@@ -136,7 +136,7 @@ VALUES
 (2, 6),
 (1, 6);
 
-I   NSERT INTO likes (user_id, article_id)
+INSERT INTO likes (user_id, article_id)
 VALUES 
 (2, 1),
 (3, 2),

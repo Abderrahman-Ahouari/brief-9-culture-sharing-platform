@@ -360,8 +360,8 @@
         <td>
           <!-- Hidden input for ID -->
           <input type="hidden" class="article-id" value="1">
-          <button class="btn-modify">Modifier</button>
-          <button class="btn-delete" onclick="deleteArticle(this)">Supprimer</button>
+          <button class="btn-modify" onclick="openPopup(this)">Modifier</button>
+          <button class="btn-delete" >Supprimer</button>
         </td>
       </tr>
       <!-- Add more rows dynamically with PHP -->

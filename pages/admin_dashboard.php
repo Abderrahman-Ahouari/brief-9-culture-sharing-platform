@@ -27,7 +27,7 @@
 
    $categorie = new categorie($connection,$disconnect);
    $admin = new admin($connection,$disconnect);
-   $articles = new articl($connection);
+   $articles = new articl($connection,$disconnect);
    $user = new users;
    $tags = new tags($connection,$disconnect);
    $comments = new comments($connection,$disconnect);
@@ -36,28 +36,28 @@
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if (isset($_POST['btn_delete'])) {
        $categorie_id = $_POST['catgeorie_id'];
-       $admin->delete_categorie($categorie_id);
+       $admin->delete_category($categorie_id);
     } 
     
     elseif (isset($_POST['btn_add'])) {
        $name= $_POST['add_categorie'];
-       $admin->add_categorie($name);
+       $admin->add_category($name);
     } 
     
     elseif (isset($_POST['btn_modify'])) {
       $new_name = $_POST['new_name'];
       $categorie_id = $_POST['catgeorie_id'];
-      $admin->modify_categorie($new_name, $categorie_id);
+      $admin->modify_category($new_name, $categorie_id);
     } 
     
     elseif (isset($_POST['accept'])) {
       $article_id = $_POST['article_id'];
-      $admin->accept_articl($article_id);
+      $admin->accept_article($article_id);
     } 
       
     elseif (isset($_POST['reject'])) {
       $article_id = $_POST['article_id'];
-      $admin->reject_articl($article_id);
+      $admin->reject_article($article_id);
     }
 
     elseif(isset($_POST['logout'])){
