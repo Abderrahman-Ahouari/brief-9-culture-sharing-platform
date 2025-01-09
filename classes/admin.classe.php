@@ -4,8 +4,9 @@ class admin extends users {
     protected $connection;
     protected $deconexion;
 
-    public function __construct($connection) {
+    public function __construct($connection,$deconexion) {
         $this->connection = $connection;
+        $this->deconexion = $deconexion;
     } 
 
     public function accept_article($id) {

@@ -5,6 +5,7 @@
       require('../classes/admin.classe.php');
       require('../classes/article.classe.php');
       require('../classes/tags.classe.php');
+      require('../classes/comments.classe.php');
 
 
 
@@ -25,10 +26,11 @@
   $disconnect = $db_connect->disconnect();
 
    $categorie = new categorie($connection);
-   $admin = new admin($connection);
+   $admin = new admin($connection,$disconnect);
    $articles = new articl($connection);
    $user = new users;
    $tags = new tags($connection,$disconnect);
+   $comments = new comments($connection,$disconnect);
     
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -83,6 +85,10 @@
      $admin->user_bann($id);
   }
     
+  elseif(isset($_POST['delete_comment_btn'])){
+    $id = $_POST['catgeorie_id'];
+    $admin->comment_delete($id);
+  }
       
    }
 
@@ -644,23 +650,58 @@
                 </tr>
             </thead>
             <tbody>
-  <?php 
-    $users_list = $user->get_all_users();
-    foreach($users_list as $user_list){
-  ?>
+    <?php 
+      $users_list = $user->get_all_users();
+      foreach($users_list as $user_list){
+    ?>
+                  <tr>
+                      <td><img src="<?php echo $user_list['image_profile'] ?>" alt="Profile" class="rounded-image"></td>
+                      <td><?php echo $user_list['first_name'] ?></td>
+                      <td><?php echo $user_list['last_name'] ?></td>
+                      <td><?php echo $user_list['email'] ?></td>
+                      <td><?php echo $user_list['phone'] ?></td>
+                      <td><?php echo $user_list['role'] ?></td>
+                      <td><form action="" method="post"><button class="ban-button" name="ban-button">Ban</button>
+                      <input type="text" class="id" name="catgeorie_id" value="<?php echo $user_list['users_id'] ; ?>">
+                    </form></td>
+                  </tr>
+                <?php } ?>
+              </tbody>
+        </table>
+  </div>
+
+  <div class="container">
+        <h1>Users Management</h1>
+        <table>
+            <thead>
                 <tr>
-                    <td><img src="<?php echo $user_list['image'] ?>" alt="Profile" class="rounded-image"></td>
-                    <td><?php echo $user_list['first_name'] ?></td>
-                    <td><?php echo $user_list['last_name'] ?></td>
-                    <td><?php echo $user_list['email'] ?></td>
-                    <td><?php echo $user_list['phone'] ?></td>
-                    <td><?php echo $user_list['role'] ?></td>
-                    <td><form action="" method="post"><button class="ban-button" name="ban-button">Ban</button>
-                    <input type="text" class="id" name="catgeorie_id" value="<?php echo $user_list['users_id'] ; ?>">
-                  </form></td>
+                    <th>Profile</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>comment</th>
+                    <th>article</th>
+                    <th>date de création</th>
+                    <th>Action</th>
                 </tr>
-              <?php } ?>
-            </tbody>
+            </thead>
+            <tbody>
+    <?php 
+      $comments_list = $comments->read_comments();
+      foreach($comments_list as $comment_list){
+    ?>
+                  <tr>
+                      <td><img src="<?php echo $comment_list['image_profile'] ?>" alt="Profile" class="rounded-image"></td>
+                      <td><?php echo $comment_list['first_name'] ?></td>
+                      <td><?php echo $comment_list['last_name'] ?></td>
+                      <td><?php echo $comment_list['comment_content'] ?></td>
+                      <td><?php echo $comment_list['title'] ?></td>
+                      <td><?php echo $comment_list['created_at'] ?></td>
+                      <td><form action="" method="post"><button class="ban-button" name="delete_comment_btn">delete</button>
+                      <input type="text" class="id" name="catgeorie_id" value="<?php echo $comment_list['comment_id'] ; ?>">
+                    </form></td>
+                  </tr>
+                <?php } ?>
+              </tbody>
         </table>
   </div>
 

@@ -97,8 +97,8 @@ class users{
                 echo "error in uploading yhr folder";
           }        
 
-        $sql = "INSERT INTO users(first_name, last_name, email, image, phone, password, role) 
-    VALUES(:first_name, :last_name, :email, :image, :phone, :password , :role );";
+        $sql = "INSERT INTO users(first_name, last_name, email, image_profile, phone, password, role) 
+            VALUES(:first_name, :last_name, :email, :image, :phone, :password , :role );";
 
     $hashed_password = password_hash($password,PASSWORD_DEFAULT);
 

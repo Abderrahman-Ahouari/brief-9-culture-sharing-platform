@@ -9,7 +9,7 @@
             $this->connection = $connection;
             $this->disconnect = $disconnect;
         }
-    
+     
         public function read_tags(){
             try{ 
                 $sql="SELECT tag_name, tag_id FROM tags;";
