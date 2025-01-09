@@ -27,7 +27,7 @@
                 die("An error in getting tags: " . $error->getMessage());
             }      
         }
-
+git 
         public function insert_article_tags($articl_id, $tags){
 
             try {
