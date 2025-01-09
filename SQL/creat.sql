@@ -136,7 +136,7 @@ VALUES
 (2, 6),
 (1, 6);
 
-I   NSERT INTO likes (user_id, article_id)
+INSERT INTO likes (user_id, article_id)
 VALUES 
 (2, 1),
 (3, 2),

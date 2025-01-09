@@ -5,7 +5,7 @@ class admin extends users {
     protected $deconexion;
 
     public function __construct($connection,$deconexion) {
-        $this->connection = $connection;
+        $this->connection = $connection; 
         $this->deconexion = $deconexion;
     } 
 

@@ -172,7 +172,7 @@ class users{
                 $sql="SELECT first_name, last_name, email, phone, image_profile FROM users WHERE users_id= :id ;";
             
                 $query = $connection->prepare($sql);
-        
+                
                 $query->bindParam(':id' , $id , PDO::PARAM_STR);
         
                 $query->execute();
