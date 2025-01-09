@@ -25,7 +25,7 @@
   $connection = $db_connect->connect();
   $disconnect = $db_connect->disconnect();
 
-   $categorie = new categorie($connection);
+   $categorie = new categorie($connection,$disconnect);
    $admin = new admin($connection,$disconnect);
    $articles = new articl($connection);
    $user = new users;

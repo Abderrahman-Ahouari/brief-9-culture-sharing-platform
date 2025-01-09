@@ -203,7 +203,7 @@
        $user_info = $user->get_user_info($user_id);
      ?>
     <div class="profile">
-      <img src="<?php echo $user_info['image']; ?>" alt="Photo de l'utilisateur">
+      <img src="<?php echo $user_info['image_profile']; ?>" alt="Photo de l'utilisateur">
       <div class="profile-info">
         <h2><?php echo $user_info['first_name'] . $user_info['last_name']; ?></h2>
         <p>Email: <?php echo $user_info['email']; ?></p>

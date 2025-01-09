@@ -162,14 +162,14 @@ class users{
         }
         
         
-
+ 
         public function get_user_info($id){
 
             try {
                 $db_connect = new Database_connection;
                 $connection = $db_connect->connect();
                 
-                $sql="SELECT first_name, last_name, email, phone, image FROM users WHERE users_id= :id ;";
+                $sql="SELECT first_name, last_name, email, phone, image_profile FROM users WHERE users_id= :id ;";
             
                 $query = $connection->prepare($sql);
         

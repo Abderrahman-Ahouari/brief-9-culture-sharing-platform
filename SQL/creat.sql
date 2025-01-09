@@ -214,6 +214,11 @@ UPDATE articles set status = 'rejected' where articles_id ='';
 SELECT * FROM users WHERE statu = 'safe' and role= 'author' OR role= 'user' and statu = 'safe';
 
 -- get all comments to display on the admin dashboard
+SELECT comment_id, comment_content, created_at, title, first_name, last_name, image FROM commentairs
+INNER JOIN  users ON users.users_id = commentairs.user_id
+INNER JOIN articles ON articles.articles_id =commentairs.article_id;
 
+
+-- insert tagged articles
 
 
