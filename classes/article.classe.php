@@ -28,7 +28,7 @@ class articl {
 
     public function get_author_articles($author_id) {
         try { 
-            $sql = "SELECT title, content, publication_date, status FROM articles WHERE author_id= :author_id  ;";
+            $sql = "SELECT articles_id, title, content, publication_date, status FROM articles WHERE author_id= :author_id  ;";
 
             $query = $this->connection->prepare($sql);
             $query->bindParam(':author_id', $author_id, PDO::PARAM_INT);

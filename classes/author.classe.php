@@ -45,6 +45,37 @@
 
 
 
+    public function delete_article($article_id){
+
+      try {
+
+        $sql = "DELETE FROM articles WHERE articles_id = :article_id ;";
+
+        $query = $this->connection->prepare($sql);
+  
+        $query->bindParam(':article_id', $article_id, PDO::PARAM_INT);
+  
+        $query->execute();
+  
+        $this->disconnect;
+
+      } catch (PDOExeption $error) {
+        die("error while deleting article" . $error->getMessage());
+      }
+
+
+    } 
+     
+    // public function($article_id){
+    //   try {
+    //       $this->connection->prepare("")
+    //   } catch (\Throwable $th) {
+    //     //throw $th;
+    //   }
+    // }
+
+
+
 
 
     

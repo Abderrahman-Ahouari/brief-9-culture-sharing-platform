@@ -1,6 +1,8 @@
 <?php
-    require('../classes/user_classe.php');
     require('../classes/connection.php');
+    require('../classes/user_classe.php');
+    require('../classes/article.classe.php');
+    require('../classes/author.classe.php');
   
      
     session_start();
@@ -14,11 +16,26 @@
     header("location: signup.php");
     }
  
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+}    
+    $db_connect = new Database_connection;
+    $connection = $db_connect->connect();
+    $disconnect = $db_connect->disconnect();
+
     $user = new users;
+    $articles = new articl($connection , $disconnect);
+    $author = new author($connection , $disconnect);
     $user_id = $_SESSION['id'];
 
       if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if(isset($_POST['delete_article'])) {
+          $article_id = $_POST['article_id'];
+          $author->delete_article($article_id);
+        } elseif (isset($_POST['logout'])) {
           $user->Logout();
+        }
+          
       }
 
 ?>
@@ -341,7 +358,7 @@
 
   <div class="container">
   <table class="articles-table">
-    <thead>
+    <thead> 
       <tr>
         <th>Titre</th>
         <th>Description</th>
@@ -351,19 +368,25 @@
       </tr>
     </thead>
     <tbody>
-      <!-- Example row, replace with PHP -->
+<?php  
+  $articles_list = $articles->get_author_articles($user_id);
+  foreach($articles_list as $article_list ){
+?> 
       <tr>
-        <td>Exemple Titre</td>
-        <td>Exemple de description courte</td>
-        <td>2025-01-09</td>
-        <td>Publié</td>
+        <td><?php echo $article_list['title'] ;?></td>
+        <td><?php echo $article_list['content'] ;?></td>
+        <td><?php echo $article_list['publication_date'] ;?></td>
+        <td><?php echo $article_list['status'] ;?></td>
         <td>
           <!-- Hidden input for ID -->
-          <input type="hidden" class="article-id" value="1">
           <button class="btn-modify" onclick="openPopup(this)">Modifier</button>
-          <button class="btn-delete" >Supprimer</button>
+        <form method="post">
+        <button class="btn-delete" name="delete_article">Supprimer</button>
+        <input type="" name="article_id" class="article-id" value="<?php echo $article_list['articles_id'] ;?>">
+      </form>  
         </td>
       </tr>
+      <?php } ?>
       <!-- Add more rows dynamically with PHP -->
     </tbody>
   </table>

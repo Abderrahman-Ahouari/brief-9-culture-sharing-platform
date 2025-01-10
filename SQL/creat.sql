@@ -219,6 +219,10 @@ INNER JOIN  users ON users.users_id = commentairs.user_id
 INNER JOIN articles ON articles.articles_id =commentairs.article_id;
 
 
--- insert tagged articles
-SELECT categories
 
+-- delete an article
+DELETE FROM articles WHERE articles_id = 2;
+
+
+
+UPDATE articles SET title = "modify", content="modify con", status="pending" 
